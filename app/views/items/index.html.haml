@@ -1,0 +1,11 @@
+%h1 All items
+%table.table
+  %tr
+    %th Title
+    %th Description
+    %th Price
+  -@items.each do |item|
+    %tr
+      %td= item.title
+      %td= item.description
+      %td= item.price 
