@@ -1,2 +1,13 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+.navbar-brand {
+  font: 1.5em Serif;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-shadow: 1px 1px 1px black, 0 0 1em #0FF, 0 0 0.2em blue;
+}
+
+.nav-pills {
+  margin-top: 5px;
+}

@@ -7,4 +7,18 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
-    = yield
+    .navbar.navbar-default
+      .container
+        .navbar-header
+          %a.navbar-brand Dinner Dash
+        %ul.nav.nav-pills
+          %li
+            = link_to root_path do
+              %span.glyphicon.glyphicon-home
+              Home
+    .container
+      = yield
+    %hr
+    .footer
+      %center
+        &copy; Dinner Dash by Krzysztof Kołek
