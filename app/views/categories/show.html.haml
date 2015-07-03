@@ -1,0 +1,12 @@
+.well
+  %h1= @category.name
+%table.table.table-hover
+  %tr
+    %th Title
+    %th Description
+    %th Price
+  - @category.items.each do |item|
+    %tr
+      %td= item.title
+      %td= item.description
+      %td= item.price
