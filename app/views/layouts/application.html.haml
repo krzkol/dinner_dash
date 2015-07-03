@@ -17,7 +17,12 @@
               %span.glyphicon.glyphicon-home
               Home
     .container
-      = yield
+      .col-md-8
+        = yield
+      .col-md-4
+        .well
+          - Category.all.each do |category|
+            = link_to category.name, category_path(category)
     %hr
     .footer
       %center
