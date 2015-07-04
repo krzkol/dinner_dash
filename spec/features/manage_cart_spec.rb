@@ -10,5 +10,15 @@ describe 'cart management', type: :feature do
       first(:link, 'Add to cart').click
       expect(page).to have_content('Added fish with chips to cart')
     end
+
+    it 'view my cart' do
+      item = Item.create! item_data
+      visit items_path
+      first(:link, 'Add to cart').click
+      expect(page).to have_content('Your Cart')
+      within 'ul.list-group' do
+        expect(page).to have_content('fish')
+      end
+    end
   end
 end
