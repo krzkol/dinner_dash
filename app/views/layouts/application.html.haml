@@ -18,6 +18,8 @@
               Home
     .container
       .col-md-8
+        - flash.each do |key, value|
+          %div{class: "alert alert-#{key}"}= value
         = yield
       .col-md-4
         .well
