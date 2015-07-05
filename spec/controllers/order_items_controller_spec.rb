@@ -56,4 +56,17 @@ RSpec.describe OrderItemsController, type: :controller do
       end
     end
   end
+
+  describe 'DELETE #destroy' do
+    let(:cart) { Cart.create }
+    let(:valid_attributes) { { quantity: 1, price: item.price, item_id: item.id, cart_id: cart.id }}
+
+    it 'destroys the requested order_item' do
+      order_item = OrderItem.create! valid_attributes
+      expect {
+        delete :destroy, { id: order_item.to_param }, valid_session
+      }.to change(OrderItem, :count).by(-1)
+      expect(flash[:success]).to be
+    end
+  end
 end

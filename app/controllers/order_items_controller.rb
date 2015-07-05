@@ -1,5 +1,5 @@
 class OrderItemsController < ApplicationController
-  before_action :set_item
+  before_action :set_item, only: :create
   before_action :set_cart
 
   def create
@@ -11,6 +11,13 @@ class OrderItemsController < ApplicationController
       flash[:danger] = 'Could not add item to cart.'
       redirect_to root_path
     end
+  end
+
+  def destroy
+    @order_item = OrderItem.find(params[:id])
+    @order_item.destroy
+    flash[:success] = 'You successfully deleted item from your cart.'
+    redirect_to root_path
   end
 
   private
