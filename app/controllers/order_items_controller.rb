@@ -3,7 +3,7 @@ class OrderItemsController < ApplicationController
   before_action :set_cart
 
   def create
-    @order_item = OrderItem.new(quantity: 1, item: @item, cart: @cart, price: @item.price)
+    @order_item = @cart.add_item(@item.id)
     if @order_item.save
       flash[:success] = "Added #{@item.title} to cart."
       redirect_to root_path

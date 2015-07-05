@@ -36,5 +36,10 @@ describe 'cart management', type: :feature do
       end
       expect(page).to_not have_content('Your Cart')
     end
+
+    it 'increase quantity of item by adding it twice' do
+      first(:link, 'Add to cart').click
+      expect(page).to have_content('2 x fish')
+    end
   end
 end

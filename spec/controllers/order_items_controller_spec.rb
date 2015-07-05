@@ -23,8 +23,15 @@ RSpec.describe OrderItemsController, type: :controller do
 
       it 'adds order_item to a cart' do
         post :create, { item_id: item.id } , valid_session
-        expect(assigns(:cart).order_items.count).to be(1)
+        expect(assigns(:cart).order_items.count).to eq(1)
         expect(assigns(:cart).order_items).to eq([assigns(:order_item)])
+      end
+
+      it 'increase quantity of item' do
+        post :create, { item_id: item.id } , valid_session
+        post :create, { item_id: item.id } , valid_session
+        expect(assigns(:cart).order_items.count).to eq(1)
+        expect(assigns(:cart).order_items.first.quantity).to eq(2)
       end
 
       it 'redirects to root_page with success message' do

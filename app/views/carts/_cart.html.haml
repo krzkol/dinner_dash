@@ -3,5 +3,5 @@
   %ul.list-group
     - @cart.order_items.each do |oi|
       %li.list-group-item
-        = oi.item.title
+        = "#{oi.quantity} x #{oi.item.title}"
         = link_to 'delete', oi,  method: :delete, data: { confirm: 'Are you sure?' }
