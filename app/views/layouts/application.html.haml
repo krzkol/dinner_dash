@@ -23,7 +23,7 @@
         = yield
       .col-md-4
         .well
-          - if @cart
+          - if cart_has_items?
             = render partial: "carts/cart"
           - Category.all.each do |category|
             = link_to category.name, category_path(category)

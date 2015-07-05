@@ -28,5 +28,13 @@ describe 'cart management', type: :feature do
       end
       expect(page).to_not have_link('delete')
     end
+
+    it 'not view cart if has no items within' do
+      within '.panel' do
+        expect(page).to have_link('delete')
+        first(:link, 'delete').click
+      end
+      expect(page).to_not have_content('Your Cart')
+    end
   end
 end
