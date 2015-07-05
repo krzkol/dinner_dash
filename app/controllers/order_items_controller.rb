@@ -6,11 +6,20 @@ class OrderItemsController < ApplicationController
     @order_item = @cart.add_item(@item.id)
     if @order_item.save
       flash[:success] = "Added #{@item.title} to cart."
-      redirect_to root_path
     else
       flash[:danger] = 'Could not add item to cart.'
-      redirect_to root_path
     end
+    redirect_to root_path
+  end
+
+  def update
+    @order_item = OrderItem.find(params[:id])
+    if @order_item.update(order_item_params)
+      flash[:success] = "Quantity of item successfully updated."
+    else
+      flash[:danger] = "Could not update item."
+    end
+    redirect_to root_path
   end
 
   def destroy
@@ -35,5 +44,9 @@ class OrderItemsController < ApplicationController
     rescue ActiveRecord::RecordNotFound
       flash[:danger] = 'Could not find item with given id'
       redirect_to root_path
+    end
+
+    def order_item_params
+      params.require(:order_item).permit(:quantity)
     end
 end

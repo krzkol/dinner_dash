@@ -64,6 +64,34 @@ RSpec.describe OrderItemsController, type: :controller do
     end
   end
 
+  describe 'PUT #update' do
+    context 'with valid_params' do
+      let(:cart) { Cart.create }
+      let(:valid_attributes) { { quantity: 1, price: item.price, item_id: item.id, cart_id: cart.id }}
+      let(:new_attributes) { { quantity: 2 }}
+
+      it 'updates quantity of item' do
+        order_item = OrderItem.create! valid_attributes
+        put :update, { id: order_item.to_param, order_item: new_attributes }, valid_session
+        order_item.reload
+        expect(order_item.quantity).to eq(2)
+      end
+
+      it 'assigns the requested order_item as @order_item' do
+        order_item = OrderItem.create! valid_attributes
+        put :update, { id: order_item.to_param, order_item: new_attributes }, valid_session
+        expect(assigns(:order_item)).to eq(order_item)
+      end
+
+      it 'redirects to root_page with success message' do
+        order_item = OrderItem.create! valid_attributes
+        put :update, { id: order_item.to_param, order_item: new_attributes }, valid_session
+        expect(flash[:success]).to be
+        expect(response).to redirect_to(root_path)
+      end
+    end
+  end
+
   describe 'DELETE #destroy' do
     let(:cart) { Cart.create }
     let(:valid_attributes) { { quantity: 1, price: item.price, item_id: item.id, cart_id: cart.id }}

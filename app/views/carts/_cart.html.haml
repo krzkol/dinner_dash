@@ -1,7 +1,7 @@
 .panel.panel-default
   .panel-heading Your Cart
-  %ul.list-group
+  %table.table.table-condensed
     - @cart.order_items.each do |oi|
-      %li.list-group-item
-        = "#{oi.quantity} x #{oi.item.title}"
-        = link_to 'delete', oi,  method: :delete, data: { confirm: 'Are you sure?' }
+      %tr
+        = render 'order_items/form', order_item: oi
+        %td= link_to 'Delete', oi,  method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs"

@@ -17,29 +17,35 @@ describe 'cart management', type: :feature do
     it 'view my cart' do
       expect(page).to have_content('Your Cart')
       within '.panel' do
-        expect(page).to have_content('fish')
+        expect(page).to have_content('Fish')
       end
     end
 
     it 'delete from cart' do
-      within '.panel' do
-        expect(page).to have_link('delete')
-        first(:link, 'delete').click
-      end
-      expect(page).to_not have_link('delete')
+      expect(page).to have_link('Delete')
+      first(:link, 'Delete').click
+      expect(page).to_not have_link('Delete')
     end
 
     it 'not view cart if has no items within' do
-      within '.panel' do
-        expect(page).to have_link('delete')
-        first(:link, 'delete').click
-      end
+      expect(page).to have_link('Delete')
+      first(:link, 'Delete').click
       expect(page).to_not have_content('Your Cart')
     end
 
     it 'increase quantity of item by adding it twice' do
       first(:link, 'Add to cart').click
-      expect(page).to have_content('2 x fish')
+      expect(page).to have_field('order_item[quantity]', with: 2)
+      expect(page).to have_content('x Fish')
+    end
+
+    it 'change quantity of item with form' do
+      expect(page).to have_field('order_item[quantity]', with: 1)
+      page.fill_in('order_item[quantity]', with: 2)
+      expect(page).to have_button('Update')
+      click_button('Update')
+      visit items_path
+      expect(page).to have_field('order_item[quantity]', with: 2)
     end
   end
 end
