@@ -1,19 +1,40 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:user) { User.new(full_name: 'Martin Luther', email: 'martin@luther.com') }
-
+  let(:user) { User.new(first_name: 'Martin', last_name: 'Luther', email: 'martin@luther.com',
+                        password: 'password') }
   it 'is valid' do
     expect(user).to be_valid
   end
 
+  it 'is not valid without a first_name' do
+    user.first_name = nil
+    expect(user).to_not be_valid
+  end
+
+  it 'is not valid without a last_name' do
+    user.last_name = nil
+    expect(user).to_not be_valid
+  end
+
   it 'is not valid without a full_name' do
-    user.full_name = nil
+    user.first_name = nil
+    user.last_name = nil
     expect(user).to_not be_valid
   end
 
   it 'is not valid without an email address' do
     user.email = nil
+    expect(user).to_not be_valid
+  end
+
+  it 'is not valid without a password' do
+    user.password = nil
+    expect(user).to_not be_valid
+  end
+
+  it 'is not valid with too short password' do
+    user.password = 'a' * 7
     expect(user).to_not be_valid
   end
 

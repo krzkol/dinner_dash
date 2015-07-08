@@ -16,6 +16,7 @@
             = link_to root_path do
               %span.glyphicon.glyphicon-home
               Home
+          %li.pull-right= link_to 'Sign up', new_user_path
     .container
       .col-md-8
         - flash.each do |key, value|
