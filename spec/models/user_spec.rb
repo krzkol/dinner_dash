@@ -12,8 +12,28 @@ RSpec.describe User, type: :model do
     expect(user).to_not be_valid
   end
 
+  it 'is not valid with too short first_name' do
+    user.first_name = 'aa'
+    expect(user).to_not be_valid
+  end
+
+  it 'is not valid with too long first_name' do
+    user.first_name = 'a' * 26
+    expect(user).to_not be_valid
+  end
+
   it 'is not valid without a last_name' do
     user.last_name = nil
+    expect(user).to_not be_valid
+  end
+
+  it 'is not valid with too short last_name' do
+    user.last_name = 'aa'
+    expect(user).to_not be_valid
+  end
+
+  it 'is not valid with too long last_name' do
+    user.first_name = 'a' * 36
     expect(user).to_not be_valid
   end
 
