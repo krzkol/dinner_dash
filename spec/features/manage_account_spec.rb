@@ -28,6 +28,16 @@ RSpec.describe 'manage an account', type: :feature do
         click_button('Log in')
         expect(page).to have_content('Successfully logged in')
       end
+
+      it 'log out' do
+        visit root_path
+        click_link('Sign in')
+        fill_in('Email', with: 'foo@bar.com')
+        fill_in('Password', with: 'pass2word')
+        click_button('Log in')
+        click_link('Log out')
+        expect(page).to have_content('Successfully logged out')
+      end
     end
 
     context 'with invalid data' do

@@ -29,4 +29,13 @@ RSpec.describe SessionsController, type: :controller do
       end
     end
   end
+
+  describe 'DELETE #destroy' do
+    it 'logs out user' do
+      user = User.create! valid_attributes
+      post :create, { email: user.email, password: user.password }, valid_session
+      delete :destroy, { id: user.id }, valid_session
+      expect(flash[:success]).to be
+    end
+  end
 end
