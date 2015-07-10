@@ -1,0 +1,20 @@
+.row
+  .well.col-sm-12
+    .row
+      .col-sm-4.col-sm-offset-5
+        %h1 Log in
+    .row
+      = form_tag login_path do
+        .form-group
+          .col-sm-2
+            = label_tag :email, nil, class: 'control-label'
+          .col-sm-10
+            = text_field_tag :email, nil, class: 'form-control'
+        .form-group
+          .col-sm-2
+            = label_tag :password, nil, class: 'control-label'
+          .col-sm-10
+            = password_field_tag :password,  nil, class: 'form-control'
+        .form-group
+          .col-sm-offset-5.col-sm-7
+            = submit_tag "Log in", class: 'btn btn-success'

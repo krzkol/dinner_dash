@@ -14,6 +14,20 @@ RSpec.describe 'manage an account', type: :feature do
         click_button('Create User')
         expect(page).to have_content('Account successfully created')
       end
+
+      before do
+        User.create(email: 'foo@bar.com', first_name: 'Fooler', last_name: 'Barcode',
+                    password: 'pass2word', password_confirmation: 'pass2word')
+      end
+
+      it 'successfully log in' do
+        visit root_path
+        click_link('Sign in')
+        fill_in('Email', with: 'foo@bar.com')
+        fill_in('Password', with: 'pass2word')
+        click_button('Log in')
+        expect(page).to have_content('Successfully logged in')
+      end
     end
 
     context 'with invalid data' do
@@ -23,6 +37,15 @@ RSpec.describe 'manage an account', type: :feature do
         click_button('Create User')
         expect(page).to have_content('errors')
         expect(page).to have_content('Could not create an account')
+      end
+
+      it 'not log in' do
+        visit root_path
+        click_link('Sign in')
+        fill_in('Email', with: '')
+        fill_in('Password', with: '')
+        click_button('Log in')
+        expect(page).to have_content('Could not log in')
       end
     end
   end
