@@ -5,8 +5,10 @@
     %th Title
     %th Description
     %th Price
+    %th
   - @category.items.each do |item|
     %tr
       %td= item.title
       %td= item.description
       %td= item.price
+      %td= link_to 'Add to cart', order_items_path(item_id: item.id), method: :post
