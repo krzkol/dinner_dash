@@ -2,22 +2,20 @@ require 'rails_helper'
 
 describe 'cart management', type: :feature do
   describe 'as unauthenticated user i can' do
-    let(:item_data) { { title: 'fish with chips', description: 'fresh fish with tasty chips', price: 4.50 } }
-
     before(:each) do
-      Item.create! item_data
+      Item.create! attributes_for(:item)
       visit items_path
       first(:link, 'Add to cart').click
     end
 
     it 'add an item to my cart' do
-      expect(page).to have_content('Added fish with chips to cart')
+      expect(page).to have_content('Added Cheeseburger to cart')
     end
 
     it 'view my cart' do
       expect(page).to have_content('Your Cart')
       within '.panel' do
-        expect(page).to have_content('Fish')
+        expect(page).to have_content('Cheeseburger')
       end
     end
 
@@ -36,7 +34,7 @@ describe 'cart management', type: :feature do
     it 'increase quantity of item by adding it twice' do
       first(:link, 'Add to cart').click
       expect(page).to have_field('order_item[quantity]', with: 2)
-      expect(page).to have_content('x Fish')
+      expect(page).to have_content('x Cheeseburger')
     end
 
     it 'change quantity of item with form' do

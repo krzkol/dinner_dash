@@ -8,8 +8,7 @@ describe UserHelper do
     end
 
     it 'return User object for logged in user' do
-      user = User.create(email: 'sample@mail.com', first_name: 'Jonathan', last_name: 'Kent', password: 'superman',
-                         password_confirmation: 'superman')
+      user = create(:user)
       session[:user_id] = user.id
       expect(helper.current_user).to be_a(User)
       expect(helper.current_user).to eq(user)

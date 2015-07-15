@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe OrderItemsController, type: :controller do
-  let(:item) { Item.create(title: 'omelete with bacon', description: 'tasty omelete', price: 3.60) }
+  let!(:item) { create(:item) }
   let(:valid_session) { {} }
 
   describe 'POST #create' do

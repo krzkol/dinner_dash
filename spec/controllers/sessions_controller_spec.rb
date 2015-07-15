@@ -1,11 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe SessionsController, type: :controller do
-  let(:valid_attributes) {
-    { email: 'foo@bar.com', first_name: 'Fooler', last_name: 'Barcode',
-                password: 'pass2word', password_confirmation: 'pass2word' }
-  }
-
   let(:invalid_attributes) {
     { email: nil, password: nil }
   }
@@ -16,7 +11,7 @@ RSpec.describe SessionsController, type: :controller do
 
     context 'with valid attributes' do
       it 'log in user' do
-        user = User.create! valid_attributes
+        user = User.create! attributes_for(:user)
         post :create, { email: user.email, password: user.password }, valid_session
         expect(flash[:success]).to be
       end
@@ -32,7 +27,7 @@ RSpec.describe SessionsController, type: :controller do
 
   describe 'DELETE #destroy' do
     it 'logs out user' do
-      user = User.create! valid_attributes
+      user = User.create! attributes_for(:user)
       post :create, { email: user.email, password: user.password }, valid_session
       delete :destroy, { id: user.id }, valid_session
       expect(flash[:success]).to be

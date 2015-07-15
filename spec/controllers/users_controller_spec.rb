@@ -1,11 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
-  let(:valid_attributes) {
-    { email: 'user@ex.ample.com', first_name: 'Josh', last_name: 'Holloway',
-      password: 'password', password_confirmation: 'password' }
-  }
-
   let(:invalid_attributes) {
     { email: nil, first_name: nil, last_name: nil, password: nil,
       password_confirmation: nil }
@@ -24,18 +19,18 @@ RSpec.describe UsersController, type: :controller do
     context 'with valid params' do
       it 'creates a new User' do
         expect {
-          post :create, { user: valid_attributes }, valid_session
+          post :create, { user: attributes_for(:user) }, valid_session
         }.to change(User, :count).by(1)
       end
 
       it 'assigns a newly created user as @user' do
-        post :create, { user: valid_attributes }, valid_session
+        post :create, { user: attributes_for(:user) }, valid_session
         expect(assigns(:user)).to be_a(User)
         expect(assigns(:user)).to_not be_a_new_record
       end
 
       it 'redirects to home page with success message' do
-        post :create, { user: valid_attributes }, valid_session
+        post :create, { user: attributes_for(:user) }, valid_session
         expect(flash[:success]).to be
         expect(response).to redirect_to(root_path)
       end

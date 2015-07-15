@@ -15,16 +15,13 @@ RSpec.describe 'manage an account', type: :feature do
         expect(page).to have_content('Account successfully created')
       end
 
-      before do
-        User.create(email: 'foo@bar.com', first_name: 'Fooler', last_name: 'Barcode',
-                    password: 'pass2word', password_confirmation: 'pass2word')
-      end
+      let!(:user) { create(:user) }
 
       it 'successfully log in' do
         visit root_path
         click_link('Sign in')
-        fill_in('Email', with: 'foo@bar.com')
-        fill_in('Password', with: 'pass2word')
+        fill_in('Email', with: 'doctor@strange.com')
+        fill_in('Password', with: 'agamotho')
         click_button('Log in')
         expect(page).to have_content('Successfully logged in')
       end
@@ -32,8 +29,8 @@ RSpec.describe 'manage an account', type: :feature do
       it 'log out' do
         visit root_path
         click_link('Sign in')
-        fill_in('Email', with: 'foo@bar.com')
-        fill_in('Password', with: 'pass2word')
+        fill_in('Email', with: 'doctor@strange.com')
+        fill_in('Password', with: 'agamotho')
         click_button('Log in')
         click_link('Log out')
         expect(page).to have_content('Successfully logged out')
