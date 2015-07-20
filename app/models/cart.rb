@@ -1,5 +1,5 @@
 class Cart < ActiveRecord::Base
-  has_many :order_items
+  has_many :order_items, as: :item_group
 
   def add_item(item_id)
     added_item = order_items.find_by(item_id: item_id)

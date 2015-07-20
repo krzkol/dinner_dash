@@ -9,7 +9,7 @@ describe CartHelper do
     it 'return true for non-empty cart' do
       cart = Cart.create
       item = create(:item)
-      order_item = OrderItem.create(item: item, cart: cart, price: item.price, quantity: 1)
+      order_item = OrderItem.create(item: item, item_group: cart, price: item.price, quantity: 1)
       cart.order_items << order_item
       assign(:cart, cart)
       expect(helper.cart_has_items?).to be

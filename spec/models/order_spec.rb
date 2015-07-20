@@ -11,12 +11,13 @@ RSpec.describe Order, type: :model do
     expect(order).to respond_to(:user)
   end
 
-  it 'has an array of items' do
-    expect(order.order_items).to eq([])
-  end
-
   it 'is not valid without user' do
     order.user = nil
+    expect(order).to_not be_valid
+  end
+
+  it 'is not valid without items' do
+    order.order_items = []
     expect(order).to_not be_valid
   end
 end
