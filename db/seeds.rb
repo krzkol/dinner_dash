@@ -1,7 +1,24 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+Item.find_or_create_by(title: 'Chips', description: 'Tasty chips with ketchup', price: 3.00)
+Item.find_or_create_by(title: 'Baked chicken', description: 'Chicken baked in oven', price: 12.00)
+Item.find_or_create_by(title: 'Tomato salad', description: 'Salad from tomatoes and onions', price: 5.70)
+Item.find_or_create_by(title: 'Grilled sausage', description: 'Sausage from the grill', price: 4.75)
+Item.find_or_create_by(title: 'Pizza with chicken', description: 'Delicious pizza with parts of chicken', price: 25.00)
+Item.find_or_create_by(title: 'Tea', description: 'Black tea', price: 3.50)
+Item.find_or_create_by(title: 'Coffee', description: 'Instant coffee', price: 4.00)
+Item.find_or_create_by(title: 'Mineral water', description: 'Fresh mineral water', price: 2.50)
+Item.find_or_create_by(title: 'Hot dog', description: 'Tasty hot dog with ketchup', price: 4.20)
+Item.find_or_create_by(title: 'Hamburger', description: 'Delicious hamburger with extra meat', price: 5.60)
+Item.find_or_create_by(title: 'Bigos', description: 'Cabbage with meat', price: 7.80)
+Item.find_or_create_by(title: 'Pierogi ruskie', description: 'Potatoes and curd inside pie', price: 7.00)
+Item.find_or_create_by(title: 'Apple pie', description: 'Apples with pie', price: 3.00)
+Item.find_or_create_by(title: 'Ice creams', description: 'Cold chocolate ice creams', price: 1.90)
+Item.find_or_create_by(title: 'Beer', description: 'Cold beer', price: 2.80)
+Item.find_or_create_by(title: 'Vodka', description: 'Burn as hell', price: 18.00)
+Item.find_or_create_by(title: 'Fried fish', description: 'Fish fried on a pan', price: 10.20)
+Item.find_or_create_by(title: 'New potatoes', description: 'New and tasty potatoes', price: 5.40)
+Item.find_or_create_by(title: 'Groats', description: 'Barley groats', price: 8.15)
+Item.find_or_create_by(title: 'Rice', description: 'White rice', price: 6.30)
+
+User.find_or_create_by(full_name: 'Rachel Werbelow', email: 'demo+rachel@jumpstartlab.com', password_digest: BCrypt::Password.create('password'))
+User.find_or_create_by(full_name: 'Jeff Casimir', email: 'demo+jeff@jumpstartlab.com', password_digest: BCrypt::Password.create('password'), display_name: 'j3')
+User.find_or_create_by(full_name: 'Jorge Tellez', email: 'demo+jorge@jumpstartlab.com', password_digest: BCrypt::Password.create('password'), display_name: 'novohispano')
