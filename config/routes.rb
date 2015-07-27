@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :categories, only: :show
   resources :order_items, only: [:create, :update, :destroy]
   resources :users, only: [:create]
+  resources :orders, only: [:new]
 
   get '/register', to: 'users#new'
   get '/login', to: 'sessions#new'
