@@ -1,3 +1,6 @@
 %h1 Your order
-- @cart.order_items.each do |oi|
-  = oi.item.title
+%table.table
+  - @cart.order_items.each do |oi|
+    %tr
+      %td= "#{oi.quantity} x "
+      %td= oi.item.title
