@@ -3,4 +3,11 @@ class Order < ActiveRecord::Base
   has_many :order_items, as: :item_group
   validates_presence_of :user
   validates :order_items, length: { minimum: 1 }
+
+  def copy_items_from_cart(cart)
+    cart.order_items.each do |item|
+      item.item_group = self
+      order_items << item
+    end
+  end
 end
