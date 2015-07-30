@@ -67,7 +67,7 @@ RSpec.describe OrderItemsController, type: :controller do
   describe 'PUT #update' do
     context 'with valid_params' do
       let(:cart) { Cart.create }
-      let(:valid_attributes) { { quantity: 1, price: item.price, item_id: item.id, item_group: cart }}
+      let(:valid_attributes) { { price: item.price, item_id: item.id, item_group: cart }}
       let(:new_attributes) { { quantity: 2 }}
 
       it 'updates quantity of item' do
@@ -94,7 +94,7 @@ RSpec.describe OrderItemsController, type: :controller do
 
   describe 'DELETE #destroy' do
     let(:cart) { Cart.create }
-    let(:valid_attributes) { { quantity: 1, price: item.price, item_id: item.id, item_group: cart }}
+    let(:valid_attributes) { { price: item.price, item_id: item.id, item_group: cart }}
 
     it 'destroys the requested order_item' do
       order_item = OrderItem.create! valid_attributes

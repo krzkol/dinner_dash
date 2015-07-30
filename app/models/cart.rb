@@ -6,7 +6,7 @@ class Cart < ActiveRecord::Base
     if added_item
       added_item.quantity += 1
     else
-      added_item = order_items.build(quantity: 1, item_id: item_id, price: Item.find(item_id).price)
+      added_item = order_items.build(item_id: item_id, price: Item.find(item_id).price)
     end
     added_item
   end

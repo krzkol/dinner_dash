@@ -6,7 +6,7 @@ RSpec.describe OrdersController, type: :controller do
   before do
     cart = Cart.create
     item = create(:item)
-    order_item = OrderItem.create(item: item, item_group: cart, price: item.price, quantity: 1)
+    order_item = OrderItem.create(item: item, item_group: cart, price: item.price)
     cart.order_items << order_item
     session[:cart_id] = cart.id
     user = create(:user)
@@ -24,7 +24,7 @@ RSpec.describe OrdersController, type: :controller do
         post :create, {}, valid_session
         cart = Cart.create
         item = create(:item)
-        order_item = OrderItem.create(item: item, item_group: cart, price: item.price, quantity: 1)
+        order_item = OrderItem.create(item: item, item_group: cart, price: item.price)
         cart.order_items << order_item
         session[:cart_id] = cart.id
         user = User.create!(first_name: 'Josh', last_name: 'True', email: 'josh@true.com', password: 'truepass')
