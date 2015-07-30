@@ -16,3 +16,12 @@
     %td= @order.status
     %td Total:
     %td= @order.total
+  %tr
+    %td Ordered:
+    %td= @order.created_at
+    - if @order.status == 'completed' || @order.status == 'cancelled'
+      %td= "#{@order.status.capitalize} at"
+      %td= @order.updated_at
+    -else
+      %td
+      %td

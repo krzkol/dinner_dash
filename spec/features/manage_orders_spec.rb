@@ -62,6 +62,7 @@ describe 'manage orders', type: :feature do
       expect(page).to have_link('Cheeseburger')
       expect(page).to have_content('ordered')
       expect(page).to have_content('Total')
+      expect(page).to have_content('Ordered:')
     end
   end
 
