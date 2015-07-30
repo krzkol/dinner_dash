@@ -36,5 +36,10 @@ describe 'manage orders', type: :feature do
     it 'cannot checkout' do
       expect(page).to_not have_link('Checkout')
     end
+
+    it 'cannot access checkout page' do
+      visit new_order_path
+      expect(page).to have_content('You must be logged in')
+    end
   end
 end

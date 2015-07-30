@@ -13,6 +13,23 @@ RSpec.describe OrdersController, type: :controller do
     session[:user_id] = user.id
   end
 
+  describe 'GET #new' do
+    context 'as logged in user' do
+      it 'can access checkout page' do
+        get :new, {}, valid_session
+        expect(response).to_not redirect_to(login_path)
+      end
+    end
+
+    context 'as logged out user' do
+      it 'cannot access checkout page' do
+        session[:user_id] = nil
+        get :new, {}, valid_session
+        expect(response).to redirect_to(login_path)
+      end
+    end
+  end
+
   describe 'POST #create' do
     context 'with valid attributes' do
       it 'creates order' do

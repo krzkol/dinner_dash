@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
   before_action :find_cart
+  before_action :authenticate_user
 
   def new
   end
@@ -16,4 +17,16 @@ class OrdersController < ApplicationController
       redirect_to root_path
     end
   end
+
+  private
+    def authenticate_user
+      unless user_logged_in?
+        flash[:danger] = 'You must be logged in to perform this action'
+        redirect_to login_path
+      end
+    end
+
+    def user_logged_in?
+      !!current_user
+    end
 end
