@@ -16,4 +16,33 @@ describe 'browse items', type: :feature do
       expect(page).to have_content('burger')
     end
   end
+
+  describe 'as authenticated user' do
+    it 'i can add item to cart on item page' do
+      create(:user)
+      Item.create! attributes_for(:item)
+      visit root_path
+      click_link('Sign in')
+      fill_in('Email', with: 'doctor@strange.com')
+      fill_in('Password', with: 'agamotho')
+      click_button('Log in')
+      visit items_path
+      click_link('Cheeseburger')
+      click_link('Add to cart')
+      expect(page).to have_content('Added Cheeseburger')
+    end
+
+    it 'i cannot add retired item to the cart' do
+      create(:user)
+      create(:item, retired: true)
+      visit root_path
+      click_link('Sign in')
+      fill_in('Email', with: 'doctor@strange.com')
+      fill_in('Password', with: 'agamotho')
+      click_button('Log in')
+      visit items_path
+      click_link('Cheeseburger')
+      expect(page).to_not have_link('Add to cart')
+    end
+  end
 end

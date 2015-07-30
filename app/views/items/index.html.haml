@@ -10,10 +10,11 @@
     %th
   -@items.each do |item|
     %tr
-      %td= item.title
+      %td= link_to item.title, item
       %td= item.description
       %td= item.price
       %td
-        = link_to order_items_path(item_id: item.id), method: :post do
-          %span.glyphicon.glyphicon-plus
-          Add to cart
+        - unless item.retired?
+          = link_to order_items_path(item_id: item.id), method: :post do
+            %span.glyphicon.glyphicon-plus
+            Add to cart
