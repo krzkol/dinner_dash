@@ -3,11 +3,12 @@ class OrdersController < ApplicationController
   before_action :authenticate_user
 
   def index
-    @orders = Order.find_user_orders(current_user)
+    orders = Order.find_user_orders(current_user)
+    @orders = OrderDecorator.decorate_collection(orders)
   end
 
   def show
-    @order = Order.find(params[:id])
+    @order = OrderDecorator.find(params[:id])
   end
 
   def new

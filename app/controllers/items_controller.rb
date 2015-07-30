@@ -2,10 +2,11 @@ class ItemsController < ApplicationController
   before_action :find_cart
 
   def index
-    @items = Item.all
+    items = Item.all
+    @items = ItemDecorator.decorate_collection(items)
   end
 
   def show
-    @item = Item.find(params[:id])
+    @item = ItemDecorator.find(params[:id])
   end
 end
