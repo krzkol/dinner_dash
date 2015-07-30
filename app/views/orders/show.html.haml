@@ -1,1 +1,13 @@
 %h1 Your order
+%table.table.table-striped
+  %tr
+    %th Title
+    %th Price
+    %th Quantity
+    %th Subtotal
+  - @order.order_items.each do |order_item|
+    %tr
+      %td= link_to order_item.item.title, order_item.item
+      %td= order_item.price
+      %td= order_item.quantity
+      %td= order_item.total

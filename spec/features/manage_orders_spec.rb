@@ -5,6 +5,8 @@ describe 'manage orders', type: :feature do
       Item.create! attributes_for(:item)
       visit items_path
       first(:link, 'Add to cart').click
+      first(:link, 'Add to cart').click
+      first(:link, 'Add to cart').click
   end
 
   describe 'as authenticated user' do
@@ -53,6 +55,11 @@ describe 'manage orders', type: :feature do
       click_link('My orders')
       click_link('Show')
       expect(page).to have_content('Your order')
+      expect(page).to have_content('Cheeseburger')
+      expect(page).to have_content(2.50)
+      expect(page).to have_content(3)
+      expect(page).to have_content(7.50)
+      expect(page).to have_link('Cheeseburger')
     end
   end
 
@@ -68,6 +75,11 @@ describe 'manage orders', type: :feature do
 
     it 'cannot view my orders' do
       visit orders_path
+      expect(page).to have_content('You must be logged in')
+    end
+
+    it 'cannot view specific order' do
+      visit order_path(id: 1)
       expect(page).to have_content('You must be logged in')
     end
   end

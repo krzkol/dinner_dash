@@ -1,0 +1,8 @@
+%h1= @item.title
+%h4= @item.description
+%h5
+  Price:
+  =@item.price
+= link_to order_items_path(item_id: @item.id), method: :post do
+  %span.glyphicon.glyphicon-plus
+  Add to cart
