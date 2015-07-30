@@ -13,6 +13,37 @@ RSpec.describe OrdersController, type: :controller do
     session[:user_id] = user.id
   end
 
+  describe 'GET #index' do
+    context 'as logged in user' do
+      it 'can access orders page' do
+        get :index, {}, valid_session
+        expect(response).to_not redirect_to(login_path)
+      end
+
+      it 'order page shows only my orders' do
+        post :create, {}, valid_session
+        cart = Cart.create
+        item = create(:item)
+        order_item = OrderItem.create(item: item, item_group: cart, price: item.price, quantity: 1)
+        cart.order_items << order_item
+        session[:cart_id] = cart.id
+        user = User.create!(first_name: 'Josh', last_name: 'True', email: 'josh@true.com', password: 'truepass')
+        session[:user_id] = user.id
+        post :create, {}, valid_session
+        get :index, {}, valid_session
+        expect(assigns(:orders).all? { |o| o.user == user }).to eq(true)
+      end
+    end
+
+    context 'as logged out user' do
+      it 'cannot access checkout page' do
+        session[:user_id] = nil
+        get :index, {}, valid_session
+        expect(response).to redirect_to(login_path)
+      end
+    end
+  end
+
   describe 'GET #new' do
     context 'as logged in user' do
       it 'can access checkout page' do

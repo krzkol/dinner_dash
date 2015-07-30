@@ -10,4 +10,8 @@ class Order < ActiveRecord::Base
       order_items << item
     end
   end
+
+  def self.find_user_orders(user)
+    Order.where(user_id: user.id)
+  end
 end

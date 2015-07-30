@@ -4,8 +4,6 @@ module CartHelper
   end
 
   def find_cart
-    if session[:cart_id]
-      @cart = Cart.find(session[:cart_id])
-    end
+      @cart = Cart.find(session[:cart_id]) if session[:cart_id]
   end
 end

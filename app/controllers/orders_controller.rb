@@ -2,6 +2,10 @@ class OrdersController < ApplicationController
   before_action :find_cart
   before_action :authenticate_user
 
+  def index
+    @orders = Order.find_user_orders(current_user)
+  end
+
   def new
   end
 

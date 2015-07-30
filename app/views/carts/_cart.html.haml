@@ -4,7 +4,13 @@
     - @cart.order_items.each do |oi|
       %tr
         = render 'order_items/form', order_item: oi
-        %td= link_to 'Delete', oi,  method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs"
+        %td
+          = link_to order_item_path(id: oi.id), method: :delete, data: { confirm: 'Are you sure?' } do
+            %span.glyphicon.glyphicon-remove
+            Delete
     - if current_user
       %tr
-        %td= link_to 'Checkout', new_order_path, class: "btn btn-primary btn-md"
+        %td
+          = link_to new_order_path do
+            %span.glyphicon.glyphicon-usd
+            Checkout

@@ -4,4 +4,6 @@
     %tr
       %td= "#{oi.quantity} x "
       %td= oi.item.title
-= link_to 'Create order', orders_path, method: :post
+= link_to orders_path, method: :post do
+  %span.glyphicon.glyphicon-ok
+  Create order

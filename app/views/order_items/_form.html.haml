@@ -3,4 +3,5 @@
   %td= f.label ' x'
   = f.fields_for order_item.item do |fi|
     %td= fi.label fi.object.send(:title)
-  %td= f.submit 'Update'
+  %td
+    = f.submit 'Update'

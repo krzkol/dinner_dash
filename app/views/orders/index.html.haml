@@ -1,0 +1,12 @@
+%h1 Your orders
+- if @orders.any?
+  %table.table.table-striped
+    %tr
+      %th ID
+      %th Created at
+    - @orders.each do |order|
+      %tr
+        %td= order.id
+        %td= order.created_at
+- else
+  %h3 Currently not have any orders

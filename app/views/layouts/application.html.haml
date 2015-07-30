@@ -20,7 +20,14 @@
             %li.pull-right= link_to 'Sign up', register_path
             %li.pull-right= link_to 'Sign in', login_path
           - else
-            %li.pull-rigth= link_to 'Log out', logout_path
+            %li
+              = link_to orders_path do
+                %span.glyphicon.glyphicon-th-list
+                My orders
+            %li.pull-rigth
+              = link_to logout_path do 
+                %span.glyphicon.glyphicon-off
+                Log out
     .container
       .col-md-8
         - flash.each do |key, value|

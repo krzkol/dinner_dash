@@ -30,6 +30,16 @@ describe 'manage orders', type: :feature do
       click_link('Create order')
       expect(page).to have_content('Successfully created order')
     end
+
+    it 'i can view list of my orders' do
+      create(:user)
+      click_link('Sign in')
+      fill_in('Email', with: 'doctor@strange.com')
+      fill_in('Password', with: 'agamotho')
+      click_button('Log in')
+      visit root_path
+      click_link('My orders')
+    end
   end
 
   describe 'as unauthenticated user' do
