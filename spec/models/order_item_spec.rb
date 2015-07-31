@@ -18,4 +18,11 @@ RSpec.describe OrderItem, type: :model do
     order_item.item_group_id = nil
     expect(order_item).to_not be_valid
   end
+
+  describe '#total' do
+    it 'returns price multiplied by quantity' do
+      order_item = build(:order_item, quantity: 3)
+      expect(order_item.total).to eq(order_item.price * order_item.quantity)
+    end
+  end
 end

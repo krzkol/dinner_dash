@@ -7,7 +7,7 @@ RSpec.describe ItemsController, type: :controller do
     it 'assigns all items as @items' do
       item = Item.create! attributes_for(:item)
       get :index, {}, valid_session
-      expect(assigns(:items)).to eq([item])
+      expect(assigns(:items).member?(item)).to eq(true)
     end
   end
 end

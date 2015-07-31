@@ -27,21 +27,21 @@ describe 'browse items', type: :feature do
       fill_in('Password', with: 'agamotho')
       click_button('Log in')
       visit items_path
-      click_link('Cheeseburger')
+      first(:link, 'Cheeseburger').click
       click_link('Add to cart')
       expect(page).to have_content('Added Cheeseburger')
     end
 
     it 'i cannot add retired item to the cart' do
       create(:user)
-      create(:item, retired: true)
+      create(:item, :retired)
       visit root_path
       click_link('Sign in')
       fill_in('Email', with: 'doctor@strange.com')
       fill_in('Password', with: 'agamotho')
       click_button('Log in')
       visit items_path
-      click_link('Cheeseburger')
+      first(:link, 'Cheeseburger').click
       expect(page).to_not have_link('Add to cart')
     end
   end

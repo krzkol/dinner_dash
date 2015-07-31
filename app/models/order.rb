@@ -9,6 +9,7 @@ class Order < ActiveRecord::Base
       item.item_group = self
       order_items << item
     end
+    cart.order_items = []
   end
 
   def self.find_user_orders(user)

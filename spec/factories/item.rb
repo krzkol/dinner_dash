@@ -4,4 +4,8 @@ FactoryGirl.define do
     description 'Burger with lot of cheese'
     price 2.50
   end
+
+  trait :retired do
+    retired true
+  end
 end
