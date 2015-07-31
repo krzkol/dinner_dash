@@ -4,8 +4,7 @@ RSpec.describe 'manage an account', type: :feature do
   describe 'as unauthenticated user i can' do
     context 'with valid data' do
       it 'make a new account' do
-        visit root_path
-        click_link('Sign up')
+        visit register_path
         fill_in('Email', with: 'user@example.com')
         fill_in('First name', with: 'John')
         fill_in('Last name', with: 'Kowalski')
@@ -15,23 +14,19 @@ RSpec.describe 'manage an account', type: :feature do
         expect(page).to have_content('Account successfully created')
       end
 
-      let!(:user) { create(:user) }
-
-      it 'successfully log in' do
-        visit root_path
-        click_link('Sign in')
+      before(:each) do
+        create(:user)
+        visit login_path
         fill_in('Email', with: 'doctor@strange.com')
         fill_in('Password', with: 'agamotho')
         click_button('Log in')
+      end
+
+      it 'successfully log in' do
         expect(page).to have_content('Successfully logged in')
       end
 
       it 'log out' do
-        visit root_path
-        click_link('Sign in')
-        fill_in('Email', with: 'doctor@strange.com')
-        fill_in('Password', with: 'agamotho')
-        click_button('Log in')
         click_link('Log out')
         expect(page).to have_content('Successfully logged out')
       end
@@ -39,16 +34,14 @@ RSpec.describe 'manage an account', type: :feature do
 
     context 'with invalid data' do
       it 'not make a new account' do
-        visit root_path
-        click_link('Sign up')
+        visit register_path
         click_button('Create User')
         expect(page).to have_content('errors')
         expect(page).to have_content('Could not create an account')
       end
 
       it 'not log in' do
-        visit root_path
-        click_link('Sign in')
+        visit login_path
         fill_in('Email', with: '')
         fill_in('Password', with: '')
         click_button('Log in')

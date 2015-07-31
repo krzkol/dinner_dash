@@ -18,14 +18,16 @@ describe 'browse items', type: :feature do
   end
 
   describe 'as authenticated user' do
-    it 'i can add item to cart on item page' do
+    before(:each) do
       create(:user)
-      Item.create! attributes_for(:item)
-      visit root_path
-      click_link('Sign in')
+      visit login_path
       fill_in('Email', with: 'doctor@strange.com')
       fill_in('Password', with: 'agamotho')
       click_button('Log in')
+    end
+
+    it 'i can add item to cart on item page' do
+      Item.create! attributes_for(:item)
       visit items_path
       first(:link, 'Cheeseburger').click
       click_link('Add to cart')
@@ -33,15 +35,9 @@ describe 'browse items', type: :feature do
     end
 
     it 'i cannot add retired item to the cart' do
-      create(:user)
-      create(:item, :retired)
-      visit root_path
-      click_link('Sign in')
-      fill_in('Email', with: 'doctor@strange.com')
-      fill_in('Password', with: 'agamotho')
-      click_button('Log in')
+      create(:item, :retired, title: 'Fish')
       visit items_path
-      first(:link, 'Cheeseburger').click
+      first(:link, 'Fish').click
       expect(page).to_not have_link('Add to cart')
     end
   end

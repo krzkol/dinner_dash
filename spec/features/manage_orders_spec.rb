@@ -10,46 +10,32 @@ describe 'manage orders', type: :feature do
   end
 
   describe 'as authenticated user' do
-    it 'i can checkout' do
-      create(:user)
+    before(:each) do
+      User.create! attributes_for(:user)
       click_link('Sign in')
       fill_in('Email', with: 'doctor@strange.com')
       fill_in('Password', with: 'agamotho')
       click_button('Log in')
       visit root_path
+    end
+
+    it 'i can checkout' do
       click_link('Checkout')
       expect(page).to have_content('Your order')
     end
 
     it 'i can confirm order' do
-      create(:user)
-      click_link('Sign in')
-      fill_in('Email', with: 'doctor@strange.com')
-      fill_in('Password', with: 'agamotho')
-      click_button('Log in')
-      visit root_path
       click_link('Checkout')
       click_link('Create order')
       expect(page).to have_content('Successfully created order')
     end
 
     it 'i can view list of my orders' do
-      create(:user)
-      click_link('Sign in')
-      fill_in('Email', with: 'doctor@strange.com')
-      fill_in('Password', with: 'agamotho')
-      click_button('Log in')
-      visit root_path
       click_link('My orders')
       expect(page).to have_content('Your orders')
     end
 
     it 'i can view order page' do
-      create(:user)
-      click_link('Sign in')
-      fill_in('Email', with: 'doctor@strange.com')
-      fill_in('Password', with: 'agamotho')
-      click_button('Log in')
       click_link('Checkout')
       click_link('Create order')
       click_link('My orders')
