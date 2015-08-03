@@ -1,14 +1,11 @@
 class OrdersController < ApplicationController
   before_action :find_cart
   before_action :authenticate_user
+  before_action :check_order_owner, only: [:show]
 
   def index
     orders = Order.find_user_orders(current_user)
     @orders = OrderDecorator.decorate_collection(orders)
-  end
-
-  def show
-    @order = OrderDecorator.find(params[:id])
   end
 
   def new
@@ -37,5 +34,13 @@ class OrdersController < ApplicationController
 
     def user_logged_in?
       !!current_user
+    end
+
+    def check_order_owner
+      @order = OrderDecorator.find(params[:id])
+      unless @order.user == current_user
+        flash[:danger] = 'Only order owner can access this page.'
+        redirect_to root_path
+      end
     end
 end

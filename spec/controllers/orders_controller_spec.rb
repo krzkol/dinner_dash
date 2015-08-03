@@ -39,6 +39,23 @@ RSpec.describe OrdersController, type: :controller do
     end
   end
 
+  describe 'GET #show' do
+    it 'as order owner i can access order page' do
+      post :create, {}, @valid_session
+      get :show, { id: Order.last.id }, @valid_session
+      expect(response).to_not redirect_to(root_path)
+    end
+
+    it 'not show order to others' do
+      post :create, {}, @valid_session
+      user = User.create!(first_name: 'Josh', last_name: 'True', email: 'josh@true.com', password: 'truepass')
+      session[:user_id] = user.id
+      get :show, { id: Order.last.id }, @valid_session
+      expect(response).to redirect_to(root_path)
+      expect(flash[:danger]).to be
+    end
+  end
+
   describe 'GET #new' do
     context 'as logged in user' do
       it 'can access checkout page' do
