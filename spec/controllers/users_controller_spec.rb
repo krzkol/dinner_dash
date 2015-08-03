@@ -34,6 +34,11 @@ RSpec.describe UsersController, type: :controller do
         expect(flash[:success]).to be
         expect(response).to redirect_to(root_path)
       end
+
+      it 'cannot create an admin account' do
+        post :create, { user: { first_name: 'John', last_name: 'Smith', email: 'john@smith.com', password: 'pass2word', admin: true }}
+        expect(assigns(:user)).not_to be_admin
+      end
     end
 
     context 'with invalid params' do
