@@ -59,6 +59,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.9.1.1)
+    database_cleaner (1.4.1)
     diff-lcs (1.2.5)
     draper (2.1.0)
       actionpack (>= 3.0)
@@ -201,6 +202,7 @@ DEPENDENCIES
   bootstrap-sass (~> 3.3.5)
   capybara
   coffee-rails (~> 4.1.0)
+  database_cleaner
   draper
   factory_girl_rails
   haml-rails (~> 0.9)

@@ -15,9 +15,9 @@ RSpec.describe 'manage an account', type: :feature do
       end
 
       before(:each) do
-        create(:user)
+        user = create(:user)
         visit login_path
-        fill_in('Email', with: 'doctor@strange.com')
+        fill_in('Email', with: user.email)
         fill_in('Password', with: 'agamotho')
         click_button('Log in')
       end

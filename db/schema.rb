@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150803180536) do
+ActiveRecord::Schema.define(version: 20150804131420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,8 @@ ActiveRecord::Schema.define(version: 20150803180536) do
     t.datetime "updated_at"
     t.boolean  "retired",     default: false
   end
+
+  add_index "items", ["title"], name: "index_items_on_title", unique: true, using: :btree
 
   create_table "order_items", force: :cascade do |t|
     t.integer "quantity",        default: 1

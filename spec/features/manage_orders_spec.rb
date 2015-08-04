@@ -2,18 +2,18 @@ require 'rails_helper'
 
 describe 'manage orders', type: :feature do
   before(:each) do
-      Item.create! attributes_for(:item)
-      visit items_path
-      first(:link, 'Add to cart').click
-      first(:link, 'Add to cart').click
-      first(:link, 'Add to cart').click
+    @item = create(:item)
+    visit items_path
+    find(:xpath, "//a[@href='/order_items?item_id=#{@item.id}']").click
+    find(:xpath, "//a[@href='/order_items?item_id=#{@item.id}']").click
+    find(:xpath, "//a[@href='/order_items?item_id=#{@item.id}']").click
   end
 
   describe 'as authenticated user' do
     before(:each) do
-      User.create! attributes_for(:user)
+      user = create(:user)
       click_link('Sign in')
-      fill_in('Email', with: 'doctor@strange.com')
+      fill_in('Email', with: user.email)
       fill_in('Password', with: 'agamotho')
       click_button('Log in')
       visit root_path
@@ -41,11 +41,11 @@ describe 'manage orders', type: :feature do
       click_link('My orders')
       click_link('Show')
       expect(page).to have_content('Your order')
-      expect(page).to have_content('Cheeseburger')
+      expect(page).to have_content(@item.title)
       expect(page).to have_content(2.50)
       expect(page).to have_content(3)
       expect(page).to have_content(7.50)
-      expect(page).to have_link('Cheeseburger')
+      expect(page).to have_link(@item.title)
       expect(page).to have_content('ordered')
       expect(page).to have_content('Total')
       expect(page).to have_content('Ordered:')

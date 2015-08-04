@@ -9,4 +9,24 @@ class ItemsController < ApplicationController
   def show
     @item = ItemDecorator.find(params[:id])
   end
+
+  def new
+    @item = Item.new
+  end
+
+  def create
+    @item = Item.new(item_params)
+    if @item.save
+      flash[:success] = 'Successfully created item!'
+      redirect_to @item
+    else
+      flash[:danger] = 'Could not create an item'
+      render 'new'
+    end
+  end
+
+  private
+    def item_params
+      params.require(:item).permit(:title, :description, :price)
+    end
 end

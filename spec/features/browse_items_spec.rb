@@ -27,11 +27,11 @@ describe 'browse items', type: :feature do
     end
 
     it 'i can add item to cart on item page' do
-      Item.create! attributes_for(:item)
+      item = create(:item)
       visit items_path
-      first(:link, 'Cheeseburger').click
+      first(:link, item.title).click
       click_link('Add to cart')
-      expect(page).to have_content('Added Cheeseburger')
+      expect(page).to have_content("Added #{item.title}")
     end
 
     it 'i cannot add retired item to the cart' do

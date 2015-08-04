@@ -1,0 +1,26 @@
+.well
+  %h1 New Item
+  - if @item.errors.any?
+    .alert.alert-danger
+      %h4
+        = pluralize(@item.errors.count, "error")
+        prohibited this data from being saved
+      %ul
+      - @item.errors.full_messages.each do |msg|
+        %li= msg
+  = form_for @item,  html: { class: 'form-horizontal' } do |f|
+    .form-group
+      = f.label :title, class: 'col-sm-2 control-label'
+      .col-sm-10
+        = f.text_field :title, class: 'form-control'
+    .form-group
+      = f.label :description, class: 'col-sm-2 control-label'
+      .col-sm-10
+        = f.text_area :description, class: 'form-control'
+    .form-group
+      = f.label :price, class: 'col-sm-2 control-label'
+      .col-sm-10
+        = f.number_field :price, class: 'form-control', step: 0.01
+    .form-group
+      .col-sm-offset-5.col-sm-7
+        = f.submit

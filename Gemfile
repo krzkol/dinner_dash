@@ -14,6 +14,7 @@ gem 'haml-rails', '~> 0.9'
 gem 'bootstrap-sass', '~> 3.3.5'
 gem 'bcrypt', '~> 3.1.7'
 gem 'draper'
+gem 'database_cleaner'
 
 group :development, :test do
   gem 'pry'

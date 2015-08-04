@@ -17,8 +17,9 @@ Item.find_or_create_by(title: 'Vodka', description: 'Burn as hell', price: 18.00
 Item.find_or_create_by(title: 'Fried fish', description: 'Fish fried on a pan', price: 10.20)
 Item.find_or_create_by(title: 'New potatoes', description: 'New and tasty potatoes', price: 5.40)
 Item.find_or_create_by(title: 'Groats', description: 'Barley groats', price: 8.15)
-Item.find_or_create_by(title: 'Rice', description: 'White rice', price: 6.30)
+Item.find_or_create_by!(title: 'Rice', description: 'White rice', price: 6.30)
 
-User.find_or_create_by(full_name: 'Rachel Werbelow', email: 'demo+rachel@jumpstartlab.com', password_digest: BCrypt::Password.create('password'))
-User.find_or_create_by(full_name: 'Jeff Casimir', email: 'demo+jeff@jumpstartlab.com', password_digest: BCrypt::Password.create('password'), display_name: 'j3')
-User.find_or_create_by(full_name: 'Jorge Tellez', email: 'demo+jorge@jumpstartlab.com', password_digest: BCrypt::Password.create('password'), display_name: 'novohispano')
+User.create!(first_name: 'Rachel', last_name: 'Werbelow', email: 'demo+rachel@jumpstartlab.com', password: 'password')
+User.create!(first_name: 'Jeff', last_name: 'Casimir', email: 'demo+jeff@jumpstartlab.com', password: 'password', display_name: 'j3')
+User.create!(first_name: 'Jorge', last_name: 'Tellez', email: 'demo+jorge@jumpstartlab.com', password: 'password', display_name: 'novohispano')
+User.create!(first_name: 'Josh', last_name: 'Cheek', email: 'demo+josh@jumpstartlab.com', password: 'password', display_name: 'josh', admin: true)

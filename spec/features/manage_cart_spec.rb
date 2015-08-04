@@ -3,19 +3,19 @@ require 'rails_helper'
 describe 'cart management', type: :feature do
   describe 'as unauthenticated user i can' do
     before(:each) do
-      Item.create! attributes_for(:item)
+      @item = create(:item)
       visit items_path
-      first(:link, 'Add to cart').click
+      find(:xpath, "//a[@href='/order_items?item_id=#{@item.id}']").click
     end
 
     it 'add an item to my cart' do
-      expect(page).to have_content('Added Cheeseburger to cart')
+      expect(page).to have_content("Added #{@item.title} to cart")
     end
 
     it 'view my cart' do
       expect(page).to have_content('Your Cart')
       within '.panel' do
-        expect(page).to have_content('Cheeseburger')
+        expect(page).to have_content(@item.title)
       end
     end
 
@@ -32,9 +32,9 @@ describe 'cart management', type: :feature do
     end
 
     it 'increase quantity of item by adding it twice' do
-      first(:link, 'Add to cart').click
+      find(:xpath, "//a[@href='/order_items?item_id=#{@item.id}']").click
       expect(page).to have_field('order_item[quantity]', with: 2)
-      expect(page).to have_content('x Cheeseburger')
+      expect(page).to have_content("x #{@item.title}")
     end
 
     it 'change quantity of item with form' do
