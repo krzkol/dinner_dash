@@ -1,5 +1,7 @@
 class ItemsController < ApplicationController
   before_action :find_cart
+  before_action :authenticate_user, except: [:index, :show]
+  before_action :check_user_type, except: [:index, :show]
 
   def index
     items = Item.all
@@ -43,5 +45,12 @@ class ItemsController < ApplicationController
   private
     def item_params
       params.require(:item).permit(:title, :description, :price, :image)
+    end
+
+    def check_user_type
+      unless current_user.admin?
+        flash[:danger] = 'Sorry you must be admin to access this page'
+        redirect_to items_path
+      end
     end
 end

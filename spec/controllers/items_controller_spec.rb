@@ -11,10 +11,29 @@ RSpec.describe ItemsController, type: :controller do
     end
   end
 
+  before(:each) do
+    user = create(:user, :admin)
+    session[:user_id] = user.id
+  end
+
   describe "GET #new" do
     it "assigns a new item as @item" do
       get :new, {}, valid_session
       expect(assigns(:item)).to be_a_new(Item)
+    end
+
+    it 'redirects not signed in users' do
+      session[:user_id] = nil
+      get :new, {}, valid_session
+      expect(response).to redirect_to(login_path)
+    end
+
+    it 'redirects signed in non-admin users with error message' do
+      user = create(:user)
+      session[:user_id] = user.id
+      get :new, {}, valid_session
+      expect(flash[:danger]).to be
+      expect(response).to redirect_to(items_path)
     end
   end
 
@@ -36,6 +55,20 @@ RSpec.describe ItemsController, type: :controller do
         post :create, {:item => attributes_for(:item)}, valid_session
         expect(response).to redirect_to(item_path(assigns(:item)))
       end
+
+      it 'redirects not signed in users' do
+        session[:user_id] = nil
+        post :create, {:item => attributes_for(:item)}, valid_session
+        expect(response).to redirect_to(login_path)
+      end
+
+      it 'redirects signed in non-admin users with error message' do
+        user = create(:user)
+        session[:user_id] = user.id
+        post :create, {:item => attributes_for(:item)}, valid_session
+        expect(flash[:danger]).to be
+        expect(response).to redirect_to(items_path)
+      end
     end
 
     context "with invalid params" do
@@ -51,7 +84,25 @@ RSpec.describe ItemsController, type: :controller do
     end
   end
 
-  describe 'POST# update' do
+  describe 'GET #edit' do
+    it 'redirects not signed in users' do
+      session[:user_id] = nil
+      item = create(:item)
+      get :edit, { id: item.id }, valid_session
+      expect(response).to redirect_to(login_path)
+    end
+
+    it 'redirects signed in non-admin users with error message' do
+      user = create(:user)
+      session[:user_id] = user.id
+      item = create(:item)
+      get :edit, { id: item.id }, valid_session
+      expect(flash[:danger]).to be
+      expect(response).to redirect_to(items_path)
+    end
+  end
+
+  describe 'POST #update' do
     context 'with valid params' do
       let(:new_attributes) { { title: 'Something else' } }
 
@@ -65,6 +116,22 @@ RSpec.describe ItemsController, type: :controller do
         item = create(:item)
         post :update, { id: item.id, item: new_attributes }, valid_session
         expect(response).to redirect_to(item_path(item.id))
+      end
+
+      it 'redirects not signed in users' do
+        session[:user_id] = nil
+        item = create(:item)
+        post :update, { id: item.id, item: new_attributes }, valid_session
+        expect(response).to redirect_to(login_path)
+      end
+
+      it 'redirects signed in non-admin users with error message' do
+        user = create(:user)
+        session[:user_id] = user.id
+        item = create(:item)
+        post :update, { id: item.id, item: new_attributes }, valid_session
+        expect(flash[:danger]).to be
+        expect(response).to redirect_to(items_path)
       end
     end
 

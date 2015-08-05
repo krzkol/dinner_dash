@@ -25,17 +25,6 @@ class OrdersController < ApplicationController
   end
 
   private
-    def authenticate_user
-      unless user_logged_in?
-        flash[:danger] = 'You must be logged in to perform this action'
-        redirect_to login_path
-      end
-    end
-
-    def user_logged_in?
-      !!current_user
-    end
-
     def check_order_owner
       @order = OrderDecorator.find(params[:id])
       unless @order.user == current_user
