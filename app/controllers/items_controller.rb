@@ -46,11 +46,4 @@ class ItemsController < ApplicationController
     def item_params
       params.require(:item).permit(:title, :description, :price, :image)
     end
-
-    def check_user_type
-      unless current_user.admin?
-        flash[:danger] = 'Sorry you must be admin to access this page'
-        redirect_to items_path
-      end
-    end
 end

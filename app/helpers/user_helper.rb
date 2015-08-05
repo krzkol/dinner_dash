@@ -13,4 +13,11 @@ module UserHelper
   def user_logged_in?
     !!current_user
   end
+
+  def check_user_type
+    unless current_user.admin?
+      flash[:danger] = 'Sorry you must be admin to access this page'
+      redirect_to items_path
+    end
+  end
 end
