@@ -1,11 +1,14 @@
-%h1= @item.title
-%h4= @item.description
-%h5
-  Price:
-  =@item.price
-- unless @item.retired?
-  = link_to order_items_path(item_id: @item.id), method: :post do
-    %span.glyphicon.glyphicon-plus
-    Add to cart
+.col-md-8
+  %h1= @item.title
+  %h4= @item.description
+  %h5
+    Price:
+    =@item.price
+  - unless @item.retired?
+    = link_to order_items_path(item_id: @item.id), method: :post do
+      %span.glyphicon.glyphicon-plus
+      Add to cart
+.col-md-4
+  = image_tag(@item.image.medium.url) if @item.image?
 %p
 = link_to 'Back', items_path

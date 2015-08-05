@@ -4,12 +4,14 @@
 %h1 All items
 %table.table
   %tr
+    %th
     %th Title
     %th Description
     %th Price
     %th
   -@items.each do |item|
     %tr
+      %td= image_tag(item.image.thumb.url) if item.image? 
       %td= link_to item.title, item
       %td= item.description
       %td= item.price

@@ -6,6 +6,7 @@ class Item < ActiveRecord::Base
   validates :description, presence: true, length: { minimum: 5 }
   validates :price, presence: true
   validates_presence_of :title, :description, :price
+  mount_uploader :image, ItemImageUploader
 
   def self.items_in_menu
     Item.where(retired: false)
