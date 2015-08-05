@@ -53,6 +53,16 @@ RSpec.describe Item, type: :model do
     expect(item).to_not be_valid
   end
 
+  it 'is not valid with non-numeric price' do
+    @item.price = "AAA"
+    expect(@item).to_not be_valid
+  end
+
+  it 'is not valid with price equal to 0' do
+    @item.price = 0.00
+    expect(@item).to_not be_valid
+  end
+
   describe '.items in menu' do
     it 'returns items which are not retired' do
       item = create(:item, :retired, title: 'Tasty fish')

@@ -4,8 +4,7 @@ class Item < ActiveRecord::Base
   has_many :order_items
   validates :title, presence: true, length: { minimum: 3 }, uniqueness: true
   validates :description, presence: true, length: { minimum: 5 }
-  validates :price, presence: true
-  validates_presence_of :title, :description, :price
+  validates :price, presence: true, format: { with: /\d{1,3}([.,]\d{2})?/ }, numericality: { greater_than: 0 }
   mount_uploader :image, ItemImageUploader
 
   def self.items_in_menu
