@@ -50,4 +50,38 @@ RSpec.describe ItemsController, type: :controller do
       end
     end
   end
+
+  describe 'POST# update' do
+    context 'with valid params' do
+      let(:new_attributes) { { title: 'Something else' } }
+
+      it 'updates item' do
+        item = create(:item)
+        post :update, { id: item.id, item: new_attributes }, valid_session
+        expect(flash[:success]).to be
+      end
+
+      it 'redirects to the updated item' do
+        item = create(:item)
+        post :update, { id: item.id, item: new_attributes }, valid_session
+        expect(response).to redirect_to(item_path(item.id))
+      end
+    end
+
+    context 'with invalid params' do
+      let(:invalid_attributes) { { title: nil, description: nil, price: nil } }
+
+      it 'not updates item' do
+        item = create(:item)
+        post :update, { id: item.id, item: invalid_attributes }, valid_session
+        expect(flash[:danger]).to be
+      end
+
+      it 're-renders edit template' do
+        item = create(:item)
+        post :update, { id: item.id, item: invalid_attributes }, valid_session
+        expect(response).to render_template("edit")
+      end
+    end
+  end
 end

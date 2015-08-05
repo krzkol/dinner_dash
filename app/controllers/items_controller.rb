@@ -25,6 +25,21 @@ class ItemsController < ApplicationController
     end
   end
 
+  def edit
+    @item = Item.find(params[:id])
+  end
+
+  def update
+    @item = Item.find(params[:id])
+    if @item.update(item_params)
+      flash[:success] = 'Successfully updated item!'
+      redirect_to @item
+    else
+      flash[:danger] = 'Could not update item'
+      render 'edit'
+    end
+  end
+
   private
     def item_params
       params.require(:item).permit(:title, :description, :price, :image)

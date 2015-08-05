@@ -19,6 +19,15 @@ RSpec.describe 'manage items', type: :feature do
         click_button('Create Item')
         expect(page).to have_content('Successfully created item!')
       end
+
+      it 'i can update item' do
+        create(:item)
+        visit edit_item_path(Item.last.id)
+        fill_in('Title', with: 'Chopped pork')
+        click_button('Update Item')
+        expect(page).to have_content('Successfully updated item!')
+        expect(page).to have_content('Chopped pork')
+      end
     end
 
     describe 'with invalid data' do
@@ -30,6 +39,15 @@ RSpec.describe 'manage items', type: :feature do
         fill_in('Price', with: "")
         click_button('Create Item')
         expect(page).to have_content('Could not create an item')
+      end
+
+      it 'cannot update an item' do
+        create(:item)
+        visit edit_item_path(Item.last.id)
+        fill_in('Price', with: 'cheap')
+        click_button('Update Item')
+        expect(page).to have_content('Could not update item')
+        expect(page).to_not have_content('cheap')
       end
     end
   end
