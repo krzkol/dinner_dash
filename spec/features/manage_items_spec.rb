@@ -51,6 +51,19 @@ RSpec.describe 'manage items', type: :feature do
         visit category_path(category2.id)
         expect(page).to have_content('Chips and salad')
       end
+
+      it 'i can make item retired' do
+        item = create(:item)
+        visit edit_item_path(item.id)
+        box = find('#item_retired')
+        expect(box).to_not be_checked
+        check('Retired')
+        click_button('Update Item')
+        expect(page).to have_content('Successfully updated item!')
+        visit edit_item_path(item.id)
+        box = find('#item_retired')
+        expect(box).to be_checked
+      end
     end
 
     describe 'with invalid data' do

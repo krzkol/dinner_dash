@@ -14,11 +14,16 @@
   .form-group
     = f.label :image, class: 'col-sm-2 control-label'
     .col-sm-10
-      =f.file_field :image, accept: 'image/jpeg, image/gif, image/png'
+      = f.file_field :image, accept: 'image/jpeg, image/gif, image/png'
   .form-group
     = f.label 'Categories:', class: 'col-sm-2 control-label'
     .col-sm-10
       = f.collection_check_boxes :category_ids, Category.all, :id, :name
+  -if controller.action_name == 'edit' || controller.action_name == 'update'
+    .form-group
+      = f.label :retired, class: 'col-sm-2 control-label'
+      .col-sm-10
+        = f.check_box :retired
   .form-group
     .col-sm-offset-5.col-sm-7
       = f.submit

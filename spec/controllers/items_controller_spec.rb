@@ -130,8 +130,14 @@ RSpec.describe ItemsController, type: :controller do
       it 'assigns selected category' do
         item = create(:item)
         category = Category.create(name: 'Chips')
-        post :create, { id: item.id, item: { title: 'Chips and salad', description: 'Tasty chips with fresh salad', price: 6.80, category_ids: [category.id]} }, valid_session
+        post :update, { id: item.id, item: { title: 'Chips and salad', description: 'Tasty chips with fresh salad', price: 6.80, category_ids: [category.id]} }, valid_session
         expect(assigns(:item).categories).to eq([category])
+      end
+
+      it 'updates retired status' do
+        item = create(:item)
+        post :update, { id: item.id, item: { retired: true } }, valid_session
+        expect(assigns(:item).retired).to eq(true)
       end
 
       it 'redirects not signed in users' do
