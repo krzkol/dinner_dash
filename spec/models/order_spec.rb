@@ -21,6 +21,11 @@ RSpec.describe Order, type: :model do
     expect(order).to_not be_valid
   end
 
+  it 'is not valid with incorrect status' do
+    order.status = "bought"
+    expect(order).to_not be_valid
+  end
+
   describe '#copy_items_from_cart' do
     before(:all) do
       @cart = Cart.create

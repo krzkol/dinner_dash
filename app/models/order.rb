@@ -3,6 +3,7 @@ class Order < ActiveRecord::Base
   has_many :order_items, as: :item_group
   validates_presence_of :user
   validates :order_items, length: { minimum: 1, message: 'must have at least one item' }
+  validates :status, inclusion: { in: %w[ordered paid cancelled completed], message: "%{value} is not a valid status"}
 
   def copy_items_from_cart(cart)
     cart.order_items.each do |item|
