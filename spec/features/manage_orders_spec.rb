@@ -9,6 +9,52 @@ describe 'manage orders', type: :feature do
     find(:xpath, "//a[@href='/order_items?item_id=#{@item.id}']").click
   end
 
+  describe 'as authenticated admin user' do
+    before(:each) do
+      admin = create(:user, :admin)
+      visit login_path
+      fill_in('Email', with: admin.email)
+      fill_in('Password', with: admin.password)
+      click_button('Log in')
+    end
+
+    it 'i can mark ordered order as paid' do
+      order = create(:order)
+      visit orders_path
+      click_link('Ordered')
+      click_link('Mark as paid')
+      click_link('Paid')
+      expect(page).to have_content(order.total)
+    end
+
+    it 'i can cancel ordered order' do
+      order = create(:order)
+      visit orders_path
+      click_link('Ordered')
+      click_link('Cancel')
+      click_link('Cancelled')
+      expect(page).to have_content(order.total)
+    end
+
+    it 'i can cancel paid order' do
+      order = create(:order, :paid)
+      visit orders_path
+      click_link('Paid')
+      click_link('Cancel')
+      click_link('Cancelled')
+      expect(page).to have_content(order.total)
+    end
+
+    it 'i can mark paid order as completed' do
+      order = create(:order, :paid)
+      visit orders_path
+      click_link('Paid')
+      click_link('Mark as completed')
+      click_link('Completed')
+      expect(page).to have_content(order.total)
+    end
+  end
+
   describe 'as authenticated user' do
     before(:each) do
       user = create(:user)

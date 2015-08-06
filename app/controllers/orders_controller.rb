@@ -33,6 +33,15 @@ class OrdersController < ApplicationController
     end
   end
 
+  def update
+    @order = Order.find(params[:id])
+    if @order.update_attributes(order_params)
+      redirect_to orders_path(status: params[:order][:status])
+    else
+      redirect :back
+    end
+  end
+
   private
     def check_order_owner
       @order = OrderDecorator.find(params[:id])
@@ -40,5 +49,9 @@ class OrdersController < ApplicationController
         flash[:danger] = 'Only order owner can access this page.'
         redirect_to root_path
       end
+    end
+
+    def order_params
+      params.require(:order).permit(:status)
     end
 end

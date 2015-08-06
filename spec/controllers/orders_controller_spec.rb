@@ -47,6 +47,31 @@ RSpec.describe OrdersController, type: :controller do
         get :index, { status: 'paid' }, @valid_session
         expect(assigns(:paid).include?(paid)).to be(true)
       end
+
+      it 'i can change ordered order to paid' do
+        order = create(:order)
+        put :update, { id: order.id, order: { status: 'paid'}}, @valid_session
+        get :index, { status: 'paid' }, @valid_session
+        expect(assigns(:paid).include?(order)).to be(true)
+      end
+      it 'i can cancel ordered order' do
+        order = create(:order)
+        put :update, { id: order.id, order: { status: 'cancelled'}}, @valid_session
+        get :index, { status: 'cancelled' }, @valid_session
+        expect(assigns(:cancelled).include?(order)).to be(true)
+      end
+      it 'i can cancel paid order' do
+        order = create(:order, :paid)
+        put :update, { id: order.id, order: { status: 'cancelled'}}, @valid_session
+        get :index, { status: 'cancelled' }, @valid_session
+        expect(assigns(:cancelled).include?(order)).to be(true)
+      end
+      it 'i can change paid order to completed' do
+        order = create(:order, :paid)
+        put :update, { id: order.id, order: { status: 'completed'}}, @valid_session
+        get :index, { status: 'completed' }, @valid_session
+        expect(assigns(:completed).include?(order)).to be(true)
+      end
     end
 
     context 'as logged out user' do

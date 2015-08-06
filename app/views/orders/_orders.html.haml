@@ -12,8 +12,8 @@
       %td= order.total
       %td= link_to 'Show', order_path(order.id)
       - if status == 'ordered' || status == 'paid'
-        %td Cancel
+        %td= link_to 'Cancel', order_path(id: order.id, order: { status: 'cancelled' }), method: :put
       - if status == 'ordered'
-        %td Mark as paid
+        %td= link_to 'Mark as paid', order_path(id: order.id, order: { status: 'paid' }), method: :put
       - if status == 'paid'
-        %td Mark as complete
+        %td= link_to 'Mark as completed', order_path(id: order.id, order: { status: 'completed'}), method: :put
