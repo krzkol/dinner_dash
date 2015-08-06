@@ -9,7 +9,7 @@
     %th
   - @items.each do |item|
     %tr
-      %td= image_tag(item.image.small.url) if item.image?
+      %td= image_tag(item.image.small.url)
       %td= link_to item.title, item
       %td= item.description
       %td= item.price

@@ -3,7 +3,7 @@
     = @item.title
   .panel-body
     .col-md-4
-      = image_tag(@item.image.medium.url) if @item.image?
+      = image_tag(@item.image.medium.url)
     .col-md-8
       %p
         = @item.description

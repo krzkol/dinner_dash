@@ -11,7 +11,7 @@
     %th
   -@items.each do |item|
     %tr
-      %td= image_tag(item.image.thumb.url) if item.image?
+      %td= image_tag(item.image.thumb.url)
       %td= link_to item.title, item
       %td= item.description
       %td= item.price
