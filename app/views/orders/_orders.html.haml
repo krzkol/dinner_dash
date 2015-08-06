@@ -1,0 +1,19 @@
+%table.table
+  %tr
+    %th #ID
+    %th Total
+    - if status == 'ordered' || status == 'paid'
+      %th
+      %th
+    %th
+  - orders.each do |order|
+    %tr
+      %td= order.id
+      %td= order.total
+      %td= link_to 'Show', order_path(order.id)
+      - if status == 'ordered' || status == 'paid'
+        %td Cancel
+      - if status == 'ordered'
+        %td Mark as paid
+      - if status == 'paid'
+        %td Mark as complete

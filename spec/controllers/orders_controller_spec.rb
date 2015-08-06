@@ -14,7 +14,7 @@ RSpec.describe OrdersController, type: :controller do
   end
 
   describe 'GET #index' do
-    context 'as logged in user' do
+    context 'as logged in non-admin user' do
       it 'can access orders page' do
         get :index, {}, @valid_session
         expect(response).to_not redirect_to(login_path)
@@ -27,6 +27,25 @@ RSpec.describe OrdersController, type: :controller do
         post :create, {}, @valid_session
         get :index, {}, @valid_session
         expect(assigns(:orders).all? { |o| o.user == user }).to eq(true)
+      end
+    end
+
+    context 'as logged in admin user' do
+      before(:each) do
+        admin = create(:user, :admin)
+        session[:user_id] = admin.id
+      end
+
+      it 'i can browse all orders' do
+        create(:order)
+        get :index, {}, @valid_session
+        expect(assigns(:orders)).to eq(Order.all)
+      end
+
+      it 'i can browse specific orders' do
+        paid = create(:order, :paid)
+        get :index, { status: 'paid' }, @valid_session
+        expect(assigns(:paid).include?(paid)).to be(true)
       end
     end
 

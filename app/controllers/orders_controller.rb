@@ -4,7 +4,16 @@ class OrdersController < ApplicationController
   before_action :check_order_owner, only: [:show]
 
   def index
-    orders = Order.find_user_orders(current_user)
+    unless current_user.admin?
+      orders = Order.find_user_orders(current_user)
+    else
+      orders = Order.all
+      @status = params[:status]
+      @ordered = OrderDecorator.decorate_collection(Order.where(status: 'ordered'))
+      @paid = OrderDecorator.decorate_collection(Order.where(status: 'paid'))
+      @completed = OrderDecorator.decorate_collection(Order.where(status: 'completed'))
+      @cancelled = OrderDecorator.decorate_collection(Order.where(status: 'cancelled'))
+    end
     @orders = OrderDecorator.decorate_collection(orders)
   end
 
@@ -27,7 +36,7 @@ class OrdersController < ApplicationController
   private
     def check_order_owner
       @order = OrderDecorator.find(params[:id])
-      unless @order.user == current_user
+      unless @order.user == current_user || current_user.admin?
         flash[:danger] = 'Only order owner can access this page.'
         redirect_to root_path
       end

@@ -1,0 +1,51 @@
+%ul.nav.nav-tabs
+  - if status == ''
+    %li.active
+      = link_to orders_path do
+        All
+        %span.badge= @orders.count
+  - else
+    %li
+      = link_to orders_path(status: '') do
+        All
+        %span.badge= @orders.count
+  - if status == 'ordered'
+    %li.active
+      = link_to orders_path(status: 'ordered') do
+        Ordered
+        %span.badge= @ordered.count
+  - else
+    %li
+      = link_to orders_path(status: 'ordered') do
+        Ordered
+        %span.badge= @ordered.count
+  - if status == 'paid'
+    %li.active
+      = link_to orders_path(status: 'paid') do
+        Paid
+        %span.badge= @paid.count
+  - else
+    %li
+      = link_to orders_path(status: 'paid') do
+        Paid
+        %span.badge= @paid.count
+  - if status == 'completed'
+    %li.active
+      = link_to orders_path(status: 'completed') do
+        Completed
+        %span.badge= @completed.count
+  - else
+    %li
+      = link_to orders_path(status: 'completed') do
+        Completed
+        %span.badge= @completed.count
+  - if status == 'cancelled'
+    %li.active
+      = link_to orders_path(status: 'cancelled') do
+        Cancelled
+        %span.badge= @cancelled.count
+  - else
+    %li
+      = link_to orders_path(status: 'cancelled') do
+        Cancelled
+        %span.badge= @cancelled.count

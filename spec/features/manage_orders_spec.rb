@@ -29,27 +29,6 @@ describe 'manage orders', type: :feature do
       click_link('Create order')
       expect(page).to have_content('Successfully created order')
     end
-
-    it 'i can view list of my orders' do
-      click_link('My orders')
-      expect(page).to have_content('Your orders')
-    end
-
-    it 'i can view order page' do
-      click_link('Checkout')
-      click_link('Create order')
-      click_link('My orders')
-      click_link('Show')
-      expect(page).to have_content('Your order')
-      expect(page).to have_content(@item.title)
-      expect(page).to have_content(2.50)
-      expect(page).to have_content(3)
-      expect(page).to have_content(7.50)
-      expect(page).to have_link(@item.title)
-      expect(page).to have_content('ordered')
-      expect(page).to have_content('Total')
-      expect(page).to have_content('Ordered:')
-    end
   end
 
   describe 'as unauthenticated user' do

@@ -3,7 +3,7 @@
   %h4= @item.description
   %h5
     Price:
-    =@item.price
+    = @item.price
   - if @item.retired? ? false : (user_logged_in? ? !current_user.admin? : true)
     = link_to order_items_path(item_id: @item.id), method: :post do
       %span.glyphicon.glyphicon-plus
