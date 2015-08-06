@@ -25,10 +25,16 @@
                 = link_to orders_path do
                   %span.glyphicon.glyphicon-th-list
                   Orders
-            %li.pull-rigth
-              = link_to logout_path do
-                %span.glyphicon.glyphicon-off
-                Log out
+              %li.pull-rigth
+                = link_to logout_path do
+                  %span.glyphicon.glyphicon-off
+                  Log out
+              %li.pull-right
+                Logged in as:
+                - unless current_user.display_name.blank?
+                  = current_user.display_name
+                - else
+                  = current_user.full_name
     .container
       .col-md-8
         - flash.each do |key, value|

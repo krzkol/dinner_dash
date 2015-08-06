@@ -1,16 +1,21 @@
 .panel.panel-default
   .panel-heading Your Cart
-  %table.table.table-condensed
-    - @cart.order_items.each do |oi|
-      %tr
-        = render 'order_items/form', order_item: oi
-        %td
-          = link_to order_item_path(id: oi.id), method: :delete, data: { confirm: 'Are you sure?' } do
-            %span.glyphicon.glyphicon-remove
-            Delete
-    - if user_logged_in? && !current_user.admin?
-      %tr
-        %td
-          = link_to new_order_path do
-            %span.glyphicon.glyphicon-usd
-            Checkout
+  .panel-body
+    %table.table.table-condensed
+      - @cart.order_items.each do |oi|
+        %tr
+          = render 'order_items/form', order_item: oi
+          %td
+            = link_to order_item_path(id: oi.id), method: :delete, data: { confirm: 'Are you sure?' } do
+              %span.glyphicon.glyphicon-remove
+              Delete
+      - if user_logged_in? && !current_user.admin?
+        %tr
+          %td
+            = link_to new_order_path do
+              %span.glyphicon.glyphicon-usd
+              Checkout
+          %td
+          %td
+          %td
+          %td
