@@ -11,13 +11,17 @@ RSpec.describe 'manage items', type: :feature do
     end
 
     describe 'with valid data' do
-      it 'i can create a new item' do
+      it 'i can create a new item and assign item to category' do
+        category = create(:category, name: 'Chicken')
         visit new_item_path
         fill_in('Title', with: 'Baked chicken')
         fill_in('Description', with: 'Delicious chicken baked for 20 minutes.')
         fill_in('Price', with: 11.50)
+        check(category.name)
         click_button('Create Item')
         expect(page).to have_content('Successfully created item!')
+        visit category_path(category.id)
+        expect(page).to have_content('Baked chicken')
       end
 
       it 'i can update item' do
@@ -27,18 +31,6 @@ RSpec.describe 'manage items', type: :feature do
         click_button('Update Item')
         expect(page).to have_content('Successfully updated item!')
         expect(page).to have_content('Chopped pork')
-      end
-
-      it 'i can assign new item to category' do
-        category = create(:category, name: 'Chips')
-        visit new_item_path
-        fill_in('Title', with: 'Chips and salad')
-        fill_in('Description', with: 'Tasty chips with fresh salad')
-        fill_in('Price', with: 7.60)
-        check(category.name)
-        click_button('Create Item')
-        visit category_path(category.id)
-        expect(page).to have_content('Chips and salad')
       end
 
       it 'i can update items categories' do

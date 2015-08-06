@@ -5,7 +5,7 @@ RSpec.describe ItemsController, type: :controller do
 
   describe 'GET #index' do
     it 'assigns all items as @items' do
-      item = Item.create! attributes_for(:item)
+      item = create(:item)
       get :index, {}, valid_session
       expect(assigns(:items).member?(item)).to eq(true)
     end
@@ -40,19 +40,22 @@ RSpec.describe ItemsController, type: :controller do
   describe "POST #create" do
     context "with valid params" do
       it "creates a new Item" do
+        category = create(:category)
         expect {
-          post :create, {:item => attributes_for(:item)}, valid_session
+          post :create, { item: { title: 'Ham with tomatoes', description: 'Fresh tomatoes', price: 4.50, category_ids: [category.id]} }, valid_session
         }.to change(Item, :count).by(1)
       end
 
       it "assigns a newly created item as @item" do
-        post :create, {:item => attributes_for(:item)}, valid_session
+        category = create(:category)
+        post :create, { item: { title: 'Ham with tomatoes', description: 'Fresh tomatoes', price: 4.50, category_ids: [category.id]} }, valid_session
         expect(assigns(:item)).to be_a(Item)
         expect(assigns(:item)).to be_persisted
       end
 
       it "redirects to the created item" do
-        post :create, {:item => attributes_for(:item)}, valid_session
+        category = create(:category)
+        post :create, { item: { title: 'Ham with tomatoes', description: 'Fresh tomatoes', price: 4.50, category_ids: [category.id]} }, valid_session
         expect(response).to redirect_to(item_path(assigns(:item)))
       end
 

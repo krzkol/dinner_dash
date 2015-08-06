@@ -63,6 +63,11 @@ RSpec.describe Item, type: :model do
     expect(@item).to_not be_valid
   end
 
+  it 'is not valid without assigned category' do
+    @item.categories = []
+    expect(@item).to_not be_valid
+  end
+
   describe '.items in menu' do
     it 'returns items which are not retired' do
       item = create(:item, :retired, title: 'Tasty fish')
