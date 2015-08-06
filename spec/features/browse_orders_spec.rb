@@ -23,14 +23,14 @@ describe 'browse orders' do
     it 'i can view list of my orders' do
       click_link('Checkout')
       click_link('Create order')
-      click_link('My orders')
+      click_link('Orders')
       expect(page).to have_content('Your orders')
     end
 
     it 'i can view order page' do
       click_link('Checkout')
       click_link('Create order')
-      click_link('My orders')
+      click_link('Orders')
       click_link('Show')
       expect(page).to have_content('Your order')
       expect(page).to have_content(@item.title)
@@ -38,7 +38,7 @@ describe 'browse orders' do
       expect(page).to have_content(3)
       expect(page).to have_content(7.50)
       expect(page).to have_link(@item.title)
-      expect(page).to have_content('ordered')
+      expect(page).to have_content('Ordered')
       expect(page).to have_content('Total')
       expect(page).to have_content('Ordered:')
     end
@@ -77,6 +77,22 @@ describe 'browse orders' do
       visit orders_path
       first(:link, 'Show').click
       expect(page).to have_content(order.total)
+    end
+
+    it 'i can view order details' do
+      order = create(:order).decorate
+      visit orders_path
+      find(:xpath, "//a[@href='/orders/#{order.id}']").click
+      expect(page).to have_content(order.created_at)
+      expect(page).to have_content(order.user.full_name)
+      expect(page).to have_content(order.user.email)
+      oi = order.order_items.first
+      expect(page).to have_link(oi.item.title)
+      expect(page).to have_content(oi.quantity)
+      expect(page).to have_content(oi.price)
+      expect(page).to have_content(oi.total)
+      expect(page).to have_content(order.total)
+      expect(page).to have_content(order.status.capitalize)
     end
 
     it 'i can browse specific order types' do

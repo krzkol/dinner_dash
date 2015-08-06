@@ -20,11 +20,11 @@
             %li.pull-right= link_to 'Sign up', register_path
             %li.pull-right= link_to 'Sign in', login_path
           - else
-            - unless current_user.admin?
+            - if user_logged_in?
               %li
                 = link_to orders_path do
                   %span.glyphicon.glyphicon-th-list
-                  My orders
+                  Orders
             %li.pull-rigth
               = link_to logout_path do
                 %span.glyphicon.glyphicon-off

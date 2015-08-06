@@ -1,9 +1,14 @@
 %h1 Your order
 %table.table
+  %tr
+    %th Qty
+    %th Title
+    %th Subtotal
   - @cart.order_items.each do |oi|
     %tr
       %td= "#{oi.quantity} x "
       %td= oi.item.title
+      %td= oi.decorate.total
 = link_to orders_path, method: :post do
   %span.glyphicon.glyphicon-ok
   Create order

@@ -26,7 +26,7 @@ class OrdersController < ApplicationController
     order.copy_items_from_cart(@cart)
     if order.save
       flash[:success] = "Successfully created order"
-      redirect_to root_path
+      redirect_to order
     else
       flash[:danger] = "Could not create an order"
       redirect_to root_path

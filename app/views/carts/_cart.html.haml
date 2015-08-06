@@ -8,7 +8,7 @@
           = link_to order_item_path(id: oi.id), method: :delete, data: { confirm: 'Are you sure?' } do
             %span.glyphicon.glyphicon-remove
             Delete
-    - if current_user
+    - if user_logged_in? && !current_user.admin?
       %tr
         %td
           = link_to new_order_path do

@@ -1,17 +1,21 @@
-.col-md-8
-  %h1= @item.title
-  %h4= @item.description
-  %h5
-    Price:
-    = @item.price
-  - if @item.retired? ? false : (user_logged_in? ? !current_user.admin? : true)
-    = link_to order_items_path(item_id: @item.id), method: :post do
-      %span.glyphicon.glyphicon-plus
-      Add to cart
-.col-md-4
-  = image_tag(@item.image.medium.url) if @item.image?
-.col-lg-12
-  %p
-    = link_to 'Back', items_path
-    - if user_logged_in? && current_user.admin?
-      = link_to 'Edit', edit_item_path(@item)
+.panel.panel-default
+  .panel-heading
+    = @item.title
+  .panel-body
+    .col-md-4
+      = image_tag(@item.image.medium.url) if @item.image?
+    .col-md-8
+      %p
+        = @item.description
+      %p
+        Price:
+        = @item.price
+      - if @item.retired? ? false : (user_logged_in? ? !current_user.admin? : true)
+        %p
+          = link_to order_items_path(item_id: @item.id), method: :post do
+            %span.glyphicon.glyphicon-plus
+            Add to cart
+      %p
+        = link_to 'Back', items_path
+        - if user_logged_in? && current_user.admin?
+          = link_to 'Edit', edit_item_path(@item)

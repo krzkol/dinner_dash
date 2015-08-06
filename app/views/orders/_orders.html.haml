@@ -10,10 +10,22 @@
     %tr
       %td= order.id
       %td= order.total
-      %td= link_to 'Show', order_path(order.id)
+      %td
+        = link_to order_path(order.id) do
+          %span.glyphicon.glyphicon-zoom-in
+          Show
       - if status == 'ordered' || status == 'paid'
-        %td= link_to 'Cancel', order_path(id: order.id, order: { status: 'cancelled' }), method: :put
+        %td
+          = link_to order_path(id: order.id, order: { status: 'cancelled' }), method: :put do
+            %span.glyphicon.glyphicon-trash
+            Cancel
       - if status == 'ordered'
-        %td= link_to 'Mark as paid', order_path(id: order.id, order: { status: 'paid' }), method: :put
+        %td
+          = link_to order_path(id: order.id, order: { status: 'paid' }), method: :put do
+            %span.glyphicon.glyphicon-usd
+            Mark as paid
       - if status == 'paid'
-        %td= link_to 'Mark as completed', order_path(id: order.id, order: { status: 'completed'}), method: :put
+        %td
+          = link_to order_path(id: order.id, order: { status: 'completed'}), method: :put do
+            %span.glyphicon.glyphicon-check
+            Mark as completed

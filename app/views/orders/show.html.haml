@@ -1,27 +1,41 @@
-%h1 Your order
-%table.table.table-striped
-  %tr
-    %th Title
-    %th Price
-    %th Quantity
-    %th Subtotal
-  - @order.order_items.each do |order_item|
+.well
+  - unless current_user.admin?
+    %h1 Your order
+  - else
+    %p
+      %h3
+        %strong
+          Purchased by:
+        = @order.user.full_name
+    %p
+      %h3
+        %strong
+          Contact:
+        = @order.user.email
+  %table.table.table-striped
     %tr
-      %td= link_to order_item.item.title, order_item.item
-      %td= order_item.price
-      %td= order_item.quantity
-      %td= order_item.total
-  %tr
-    %td Status:
-    %td= @order.status
-    %td Total:
-    %td= @order.total
-  %tr
-    %td Ordered:
-    %td= @order.created_at
-    - if @order.status == 'completed' || @order.status == 'cancelled'
-      %td= "#{@order.status.capitalize} at"
-      %td= @order.updated_at
-    -else
-      %td
-      %td
+      %th Title
+      %th Price
+      %th Quantity
+      %th Subtotal
+    - @order.order_items.each do |order_item|
+      %tr
+        %td= link_to order_item.item.title, order_item.item
+        %td= order_item.price
+        %td= order_item.quantity
+        %td= order_item.total
+    %tr
+      %td Status:
+      %td= @order.status.capitalize
+      %td Total:
+      %td= @order.total
+    %tr
+      %td Ordered:
+      %td= @order.created_at
+      - if @order.status == 'completed' || @order.status == 'cancelled'
+        %td= "#{@order.status.capitalize} at"
+        %td= @order.updated_at
+      -else
+        %td
+        %td
+  = link_to 'Back', orders_path
