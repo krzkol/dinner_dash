@@ -28,6 +28,37 @@ RSpec.describe 'manage items', type: :feature do
         expect(page).to have_content('Successfully updated item!')
         expect(page).to have_content('Chopped pork')
       end
+
+      it 'i can assign new item to category' do
+        category = create(:category, name: 'Chips')
+        visit new_item_path
+        fill_in('Title', with: 'Chips and salad')
+        fill_in('Description', with: 'Tasty chips with fresh salad')
+        fill_in('Price', with: 7.60)
+        check(category.name)
+        click_button('Create Item')
+        visit category_path(category.id)
+        expect(page).to have_content('Chips and salad')
+      end
+
+      it 'i can update items categories' do
+        category = create(:category, name: 'Chips')
+        visit new_item_path
+        fill_in('Title', with: 'Chips and salad')
+        fill_in('Description', with: 'Tasty chips with fresh salad')
+        fill_in('Price', with: 7.60)
+        check(category.name)
+        click_button('Create Item')
+        category2 = Category.create(name: 'Salads')
+        visit edit_item_path(Item.last.id)
+        uncheck(category.name)
+        check(category2.name)
+        click_button('Update Item')
+        visit category_path(category.id)
+        expect(page).to_not have_content('Chips and salad')
+        visit category_path(category2.id)
+        expect(page).to have_content('Chips and salad')
+      end
     end
 
     describe 'with invalid data' do

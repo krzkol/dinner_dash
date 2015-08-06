@@ -56,6 +56,12 @@ RSpec.describe ItemsController, type: :controller do
         expect(response).to redirect_to(item_path(assigns(:item)))
       end
 
+      it 'assigns selected category' do
+        category = create(:category)
+        post :create, { item: { title: 'Chips and salad', description: 'Tasty chips with fresh salad', price: 6.80, category_ids: [category.id]} }, valid_session
+        expect(assigns(:item).categories).to eq([category])
+      end
+
       it 'redirects not signed in users' do
         session[:user_id] = nil
         post :create, {:item => attributes_for(:item)}, valid_session
@@ -116,6 +122,13 @@ RSpec.describe ItemsController, type: :controller do
         item = create(:item)
         post :update, { id: item.id, item: new_attributes }, valid_session
         expect(response).to redirect_to(item_path(item.id))
+      end
+
+      it 'assigns selected category' do
+        item = create(:item)
+        category = Category.create(name: 'Chips')
+        post :create, { id: item.id, item: { title: 'Chips and salad', description: 'Tasty chips with fresh salad', price: 6.80, category_ids: [category.id]} }, valid_session
+        expect(assigns(:item).categories).to eq([category])
       end
 
       it 'redirects not signed in users' do
