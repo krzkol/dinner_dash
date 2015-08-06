@@ -4,7 +4,7 @@ class ItemsController < ApplicationController
   before_action :check_user_type, except: [:index, :show]
 
   def index
-    items = Item.all
+    items = Item.items_in_menu
     @items = ItemDecorator.decorate_collection(items)
   end
 

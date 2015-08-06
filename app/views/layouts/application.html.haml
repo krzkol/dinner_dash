@@ -16,16 +16,17 @@
             = link_to root_path do
               %span.glyphicon.glyphicon-home
               Home
-          - unless current_user
+          - unless user_logged_in?
             %li.pull-right= link_to 'Sign up', register_path
             %li.pull-right= link_to 'Sign in', login_path
           - else
-            %li
-              = link_to orders_path do
-                %span.glyphicon.glyphicon-th-list
-                My orders
+            - unless current_user.admin?
+              %li
+                = link_to orders_path do
+                  %span.glyphicon.glyphicon-th-list
+                  My orders
             %li.pull-rigth
-              = link_to logout_path do 
+              = link_to logout_path do
                 %span.glyphicon.glyphicon-off
                 Log out
     .container
@@ -33,12 +34,17 @@
         - flash.each do |key, value|
           %div{class: "alert alert-#{key}"}= value
         = yield
-      .col-md-4
-        .well
-          - if cart_has_items?
-            = render partial: "carts/cart"
-          - Category.all.each do |category|
-            = link_to category.name, category_path(category)
+      - if Category.any? || cart_has_items?
+        .col-md-4
+          .well
+            - if cart_has_items?
+              = render partial: "carts/cart"
+            - Category.all.each do |category|
+              %p
+                = link_to category.name, category_path(category)
+            - if user_logged_in? && current_user.admin?
+              %p
+                = link_to 'New Category', new_category_path
     %hr
     .footer
       %center

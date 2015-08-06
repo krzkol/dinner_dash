@@ -2,13 +2,22 @@
   %h1= @category.name
 %table.table.table-hover
   %tr
+    %th
     %th Title
     %th Description
     %th Price
     %th
   - @category.items.each do |item|
     %tr
-      %td= item.title
+      %td= image_tag(item.image.small.url) if item.image?
+      %td= link_to item.title, item
       %td= item.description
       %td= item.price
-      %td= link_to 'Add to cart', order_items_path(item_id: item.id), method: :post
+      %td
+        - if user_logged_in? ? !current_user.admin? : true
+          = link_to order_items_path(item_id: item.id), method: :post do
+            %span.glyphicon.glyphicon-plus
+            Add to cart
+- if user_logged_in? && current_user.admin?
+  %p
+    = link_to 'New Category', new_category_path

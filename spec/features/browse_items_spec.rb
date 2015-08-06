@@ -35,9 +35,8 @@ describe 'browse items', type: :feature do
     end
 
     it 'i cannot add retired item to the cart' do
-      create(:item, :retired, title: 'Fish')
-      visit items_path
-      first(:link, 'Fish').click
+      item = create(:item, :retired, title: 'Fish')
+      visit item_path(item)
       expect(page).to_not have_link('Add to cart')
     end
   end

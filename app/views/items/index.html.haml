@@ -4,19 +4,22 @@
 %h1 All items
 %table.table
   %tr
-    %th
+    %th Image
     %th Title
     %th Description
     %th Price
     %th
   -@items.each do |item|
     %tr
-      %td= image_tag(item.image.thumb.url) if item.image? 
+      %td= image_tag(item.image.thumb.url) if item.image?
       %td= link_to item.title, item
       %td= item.description
       %td= item.price
       %td
-        - unless item.retired?
+        - if user_logged_in? ? !current_user.admin? : true
           = link_to order_items_path(item_id: item.id), method: :post do
             %span.glyphicon.glyphicon-plus
             Add to cart
+- if user_logged_in? && current_user.admin?
+  %p
+    = link_to 'New Item', new_item_path
