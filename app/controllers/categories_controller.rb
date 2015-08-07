@@ -5,7 +5,7 @@ class CategoriesController < ApplicationController
 
   def show
     @category = Category.find(params[:id])
-    @items = ItemDecorator.decorate_collection(@category.items)
+    @items = ItemDecorator.decorate_collection(@category.items.where(retired: false))
   end
 
   def new

@@ -9,6 +9,14 @@ RSpec.describe CategoriesController, type: :controller do
       get :show, { id: category.to_param }, valid_session
       expect(assigns(:category)).to eq(category)
     end
+
+    it 'assigns category items currently in menu' do
+      category = create(:category)
+      item = create(:item, :retired)
+      category.items << item
+      get :show, { id: category.to_param }, valid_session
+      expect(assigns(:items).include?(item)).to be(false)
+    end
   end
 
   before(:each) do

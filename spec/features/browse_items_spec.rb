@@ -15,6 +15,13 @@ describe 'browse items', type: :feature do
       visit category_path(category)
       expect(page).to have_content('burger')
     end
+
+    it 'not browse retired items on category page' do
+      category.items << item
+      item.update_attribute(:retired, true)
+      visit category_path(category)
+      expect(page).to_not have_content(item.title)
+    end
   end
 
   describe 'as authenticated user' do
