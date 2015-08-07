@@ -17,6 +17,7 @@ gem 'draper'
 gem 'database_cleaner'
 gem 'carrierwave'
 gem 'mini_magick'
+gem 'fog'
 
 group :development, :test do
   gem 'pry'
@@ -27,4 +28,7 @@ end
 
 group :test do
   gem 'capybara'
+end
+group :production do
+  gem 'rails_12factor'
 end
