@@ -21,11 +21,17 @@ class OrderItemsController < ApplicationController
   def update
     @order_item = OrderItem.find(params[:id])
     if @order_item.update(order_item_params)
-      flash[:success] = "Quantity of item successfully updated."
+      respond_to do |format|
+        format.html do
+          flash[:success] = "Quantity of item successfully updated."
+          redirect_to root_path
+        end
+        format.js { render layout: false }
+      end
     else
       flash[:danger] = "Could not update item."
+      redirect_to root_path
     end
-    redirect_to root_path
   end
 
   def destroy

@@ -1,6 +1,9 @@
-= form_for order_item do |f|
+= form_for order_item, remote: true do |f|
   %td= f.number_field :quantity, in: 1..20, class: 'nfield'
   %td= f.label ' x'
   = f.fields_for order_item.item do |fi|
     %td= fi.label fi.object.send(:title)
-  %td= f.submit 'Update'
+  %td
+    = button_tag type: 'submit', class: "update-quantity" do
+      %span.glyphicon.glyphicon-pencil
+      Update
