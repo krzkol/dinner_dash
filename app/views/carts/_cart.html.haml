@@ -6,7 +6,7 @@
         %tr
           = render 'order_items/form', order_item: oi
           %td
-            = link_to order_item_path(id: oi.id), method: :delete, data: { confirm: 'Are you sure?' } do
+            = link_to order_item_path(id: oi.id), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: "delete-order-item" do
               %span.glyphicon.glyphicon-remove
               Delete
       - if user_logged_in? && !current_user.admin?

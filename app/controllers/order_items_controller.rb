@@ -31,8 +31,13 @@ class OrderItemsController < ApplicationController
   def destroy
     @order_item = OrderItem.find(params[:id])
     @order_item.destroy
-    flash[:success] = 'You successfully deleted item from your cart.'
-    redirect_to root_path
+    respond_to do |format|
+      format.html do
+        flash[:success] = 'You successfully deleted item from your cart.'
+        redirect_to root_path
+      end
+      format.js { render layout: false }
+    end
   end
 
   private

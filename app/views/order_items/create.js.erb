@@ -1,1 +1,4 @@
+if (<%= cart_has_items? %>){
+  $('#cart-section').fadeIn('slow');
+}
 $('#cart-section').html("<%= j render(@cart) %>");

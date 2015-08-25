@@ -1,0 +1,6 @@
+$('.delete-order-item').bind('ajax:success', function() {
+  $(this).closest('tr').remove();
+  if(!<%= cart_has_items? %>){
+    $('#cart-section').fadeOut('slow');
+  }
+});
