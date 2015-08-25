@@ -15,9 +15,7 @@
       %td= item.price
       %td
         - if user_logged_in? ? !current_user.admin? : true
-          = link_to order_items_path(item_id: item.id), method: :post do
-            %span.glyphicon.glyphicon-plus
-            Add to cart
+          = add_to_cart(item)
 - if user_logged_in? && current_user.admin?
   %p
     = link_to 'New Category', new_category_path

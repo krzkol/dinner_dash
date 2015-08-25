@@ -5,11 +5,17 @@ class OrderItemsController < ApplicationController
   def create
     @order_item = @cart.add_item(@item.id)
     if @order_item.save
-      flash[:success] = "Added #{@item.title} to cart."
+      respond_to do |format|
+        format.html do
+          flash[:success] = "Added #{@item.title} to cart."
+          redirect_to root_path
+        end
+        format.js {}
+      end
     else
       flash[:danger] = 'Could not add item to cart.'
+      redirect_to root_path
     end
-    redirect_to root_path
   end
 
   def update

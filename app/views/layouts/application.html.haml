@@ -43,8 +43,9 @@
       - if Category.any? || cart_has_items?
         .col-md-4
           .well
-            - if cart_has_items?
-              = render partial: "carts/cart"
+            #cart-section
+              - if cart_has_items?
+                = render partial: "carts/cart"
             - Category.all.each do |category|
               %p
                 = link_to category.name, category_path(category)
